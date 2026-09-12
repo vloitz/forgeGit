@@ -4,10 +4,21 @@ Proyecto inicializado con `init.cmd`.
 
 ## Comandos
 
-- guardar.cmd — Commit de cambios en Git
-- subir.cmd — Push a GitHub
-- respaldar.cmd — Snapshot en versiones/
-- historial.cmd — Ver commits, tags, snapshots
+### Esenciales
+- `init.cmd` — Bootstrap (una vez por proyecto)
+- `abrir.cmd` — Abrir en VS Code
+
+### Trabajo diario
+- `guardar.cmd` — Commit de cambios
+- `subir.cmd` — Push a GitHub
+- `historial.cmd` — Ver commits recientes
+
+### Ocasionales
+- `snapshots.cmd` — Crear/restaurar copias
+- `auditar.cmd` — Generar reporte diff
+
+### Internos (no ejecutar)
+- `config.cmd`, `lib/`, `templates/`
 
 ---
 
