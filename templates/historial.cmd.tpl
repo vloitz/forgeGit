@@ -15,7 +15,7 @@ if exist ".git" (
     echo.
     echo   FECHA                HASH       MENSAJE
     echo   ----------------------------------------------------------------
-    git log --date=format:"%Y-%m-%d %H:%M:%S" --pretty=format:"  %ad  %h  %s" -20
+    git log --date=format:"%%Y-%%m-%%d %%H:%%M:%%S" --pretty=format:"  %%ad  %%h  %%s" -20
     echo.
     echo.
 ) else (
