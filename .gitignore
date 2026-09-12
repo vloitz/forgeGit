@@ -63,6 +63,9 @@ old_versions/
 backup/
 backups/
 
+# ==== Reportes de auditoria ====
+audits/
+
 # ==== Temporales ====
 *.log
 *.tmp
