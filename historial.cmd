@@ -55,7 +55,7 @@ echo   !C_CY!-------------------------------------------------------------!C_RS!
 if exist ".git" (
     set "TAG_C=0"
     for /f "delims=" %%T in ('git tag -l 2^>nul') do (
-        echo   !C_YE!●!C_RS! !C_WH!%%T!C_RS!
+        echo   !C_YE!-!C_RS! !C_WH!%%T!C_RS!
         set /a TAG_C+=1
     )
     if !TAG_C! EQU 0 echo   !C_GY!(sin tags)!C_RS!
@@ -69,10 +69,10 @@ echo   !C_CY!-------------------------------------------------------------!C_RS!
 if exist "versiones" (
     set "SNAP_C=0"
     for /f "delims=" %%S in ('dir /b /o-n "versiones" 2^>nul') do (
-        echo   !C_YE!●!C_RS! !C_WH!%%S!C_RS!
+        echo   !C_YE!-!C_RS! !C_WH!%%S!C_RS!
         set /a SNAP_C+=1
     )
-    if !SNAP_C! EQU 0 echo   !C_GY!(sin snapshots)^!C_RS!
+    if !SNAP_C! EQU 0 echo   !C_GY!(sin snapshots)!C_RS!
 ) else (
     echo   !C_GY!(sin snapshots)!C_RS!
 )
