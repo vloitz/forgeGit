@@ -5,7 +5,7 @@ REM   UI helpers - banner and status messages
 REM
 REM   Usage:
 REM     call "ui.cmd" banner
-REM     call "ui.cmd" step 1/9 "Node.js v20" "OK"
+REM     call "ui.cmd" step 1/12 "Node.js v20" "OK"
 REM     call "ui.cmd" done
 REM     call "ui.cmd" abort
 REM ============================================================
@@ -19,7 +19,7 @@ goto :eof
 :banner
 echo.
 echo   ############################################
-echo   #  forge-git v%FG_VERSION%                 #
+echo   #  forge-git v%FG_VERSION%                        #
 echo   #  Bootstrap universal de proyecto         #
 echo   ############################################
 echo.
@@ -29,7 +29,7 @@ echo.
 goto :eof
 
 :step
-REM %2 = step id (1/9), %3 = label, %4 = status
+REM %2 = step id (1/12), %3 = label, %4 = status
 echo   [%~2] %~3    %~4
 goto :eof
 
@@ -39,8 +39,12 @@ echo   ############################################
 echo   #  Bootstrap completado                     #
 echo   ############################################
 echo.
-echo   Siguiente:
-echo     subir.cmd   Crear backup del proyecto
+echo   Comandos disponibles:
+echo.
+echo     guardar.cmd     Commit de cambios en Git
+echo     subir.cmd       Push a GitHub
+echo     respaldar.cmd   Snapshot en versiones/
+echo     historial.cmd   Ver commits, tags, snapshots
 echo.
 goto :eof
 
