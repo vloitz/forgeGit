@@ -4,7 +4,7 @@ chcp 65001 >nul 2>nul
 
 cd /d "%~dp0"
 
-REM --- Colores ANSI (con fallback) ---
+REM --- Colores ANSI ---
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 if "!ESC!"=="" (
     set "C_CY=" & set "C_BC=" & set "C_GR=" & set "C_YE="
@@ -23,59 +23,43 @@ echo   !C_CY!============================================!C_RS!
 echo.
 
 REM --- COMMITS ---
-if exist ".git" (
-    echo   !C_CY!-------------------------------------------------------------!C_RS!
-    echo   !C_BC! ULTIMOS 20 COMMITS!C_RS!
-    echo   !C_CY!-------------------------------------------------------------!C_RS!
-    echo   !C_GY! IDX    FECHA                 HASH      MENSAJE!C_RS!
-    echo   !C_CY!-------------------------------------------------------------!C_RS!
-
-    git log -n 20 --date=format:"%%Y-%%m-%%d %%H:%%M:%%S" --pretty=format:"%%h %%ad %%s" > "%TEMP%\fgh_log.txt" 2>nul
-
-    set "IDX=0"
-    for /f "delims=" %%L in ('type "%TEMP%\fgh_log.txt"') do (
-        set "LINE=%%L"
-        set "HASH=!LINE:~0,7!"
-        set "DT=!LINE:~8,19!"
-        set "MSG=!LINE:~28!"
-        echo   !C_YE![!IDX!]!C_RS! !C_GY!!DT!!C_RS!  !C_YE!!HASH!!C_RS!  !C_WH!!MSG!!C_RS!
-        set /a IDX+=1
-    )
-    del "%TEMP%\fgh_log.txt" >nul 2>nul
-    echo   !C_CY!-------------------------------------------------------------!C_RS!
-) else (
+if not exist ".git" (
     echo   !C_RE![X]!C_RS! Sin repositorio Git.
+    goto :tags
 )
+
+echo   !C_CY!-------------------------------------------------------------!C_RS!
+echo   !C_BC! ULTIMOS 20 COMMITS!C_RS!
+echo   !C_CY!-------------------------------------------------------------!C_RS!
+echo   !C_GY! IDX    FECHA                 HASH      MENSAJE!C_RS!
+echo   !C_CY!-------------------------------------------------------------!C_RS!
+
+git log -n 20 --date=format:"%%Y-%%m-%%d %%H:%%M:%%S" --pretty=format:"%%h %%ad %%s" > "%TEMP%\fgh_log.txt" 2>nul
+
+set "IDX=0"
+for /f "delims=" %%L in ('type "%TEMP%\fgh_log.txt"') do (
+    set "LINE=%%L"
+    set "HASH=!LINE:~0,7!"
+    set "DT=!LINE:~8,19!"
+    set "MSG=!LINE:~28!"
+    echo   !C_YE![!IDX!]!C_RS! !C_GY!!DT!!C_RS!  !C_YE!!HASH!!C_RS!  !C_WH!!MSG!!C_RS!
+    set /a IDX+=1
+)
+del "%TEMP%\fgh_log.txt" >nul 2>nul
+echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo.
 
-REM --- TAGS ---
+:tags
 echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo   !C_BC! TAGS!C_RS!
 echo   !C_CY!-------------------------------------------------------------!C_RS!
-if exist ".git" (
-    set "TAG_C=0"
-    for /f "delims=" %%T in ('git tag -l 2^>nul') do (
-        echo   !C_YE!-!C_RS! !C_WH!%%T!C_RS!
-        set /a TAG_C+=1
-    )
-    if !TAG_C! EQU 0 echo   !C_GY!(sin tags)!C_RS!
-)
+if exist ".git" git tag -l
 echo.
 
-REM --- SNAPSHOTS ---
 echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo   !C_BC! SNAPSHOTS!C_RS!
 echo   !C_CY!-------------------------------------------------------------!C_RS!
-if exist "versiones" (
-    set "SNAP_C=0"
-    for /f "delims=" %%S in ('dir /b /o-n "versiones" 2^>nul') do (
-        echo   !C_YE!-!C_RS! !C_WH!%%S!C_RS!
-        set /a SNAP_C+=1
-    )
-    if !SNAP_C! EQU 0 echo   !C_GY!(sin snapshots)!C_RS!
-) else (
-    echo   !C_GY!(sin snapshots)!C_RS!
-)
+if exist "versiones" dir /b /o-n "versiones" 2^>nul
 echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo.
 
