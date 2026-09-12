@@ -4,7 +4,6 @@ chcp 65001 >nul 2>nul
 
 cd /d "%~dp0"
 
-REM --- Colores ANSI (con fallback) ---
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 if "!ESC!"=="" (
     set "C_CY=" & set "C_BC=" & set "C_GR=" & set "C_YE="
@@ -38,15 +37,15 @@ git diff --cached --name-only | findstr /n "^"
 echo.
 echo   !C_GY!Evita usar: " # : + / , en el mensaje!C_RS!
 echo.
-
+echo   !C_BC!Mensaje del commit!C_RS! !C_GY![Enter = Sin definir]!C_RS!
 set "MSG="
-set /p "MSG=  !C_BC!Mensaje del commit!C_RS! !C_GY![Enter = Sin definir]!C_RS!: "
+set /p MSG=
 if "!MSG!"=="" set "MSG=Sin definir"
 
 git commit -q -m "!MSG!"
 if errorlevel 1 (
     echo.
-    echo   !C_RE![X]!C_RS! Commit fallo. Revisa el mensaje (sin comillas ni simbolos).
+    echo   !C_RE![X]!C_RS! Commit fallo. Revisa el mensaje.
     exit /b 1
 )
 echo.
