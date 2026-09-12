@@ -6,7 +6,8 @@ REM
 REM   Usage:
 REM     call "git-ops.cmd" init           - init repo
 REM     call "git-ops.cmd" branch_main    - rename branch to main
-REM     call "git-ops.cmd" commit         - commit if changes exist
+REM     call "git-ops.cmd" has_changes    - check for pending changes
+REM     call "git-ops.cmd" commit "msg"   - commit with message
 REM     call "git-ops.cmd" tag            - create tag
 REM
 REM   Return codes:
@@ -23,20 +24,20 @@ goto :eof
 
 :init
 if exist ".git" (
-    call "%~dp0ui.cmd" step 3/9 "Repositorio Git" "YA EXISTE"
+    call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "YA EXISTE"
     exit /b 0
 )
 git init -q
 if errorlevel 1 (
-    call "%~dp0ui.cmd" step 3/9 "Repositorio Git" "ERROR"
+    call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "ERROR"
     exit /b 1
 )
-call "%~dp0ui.cmd" step 3/9 "Repositorio Git" "CREADO"
+call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "CREADO"
 exit /b 1
 
 :branch_main
 git branch -M %BRANCH_MAIN% >nul 2>nul
-call "%~dp0ui.cmd" step 4/9 "Rama principal: %BRANCH_MAIN%" "OK"
+call "%~dp0ui.cmd" step 4/12 "Rama principal: %BRANCH_MAIN%" "OK"
 exit /b 0
 
 :has_changes
