@@ -87,11 +87,15 @@ if exist "README.md" (
 )
 
 REM ============================================================
-REM   STEP 7 - Initial commit
+REM   STEP 7 - Commit
 REM ============================================================
-call "%LIB%\git-ops.cmd" commit
+call "%LIB%\git-ops.cmd" has_changes
 if errorlevel 1 (
-    call "%LIB%\ui.cmd" step 7/9 "Commit inicial" "CREADO"
+    set "USER_MSG="
+    set /p "USER_MSG=  Mensaje del commit [Enter = default]: "
+    if "!USER_MSG!"=="" set "USER_MSG=%COMMIT_MESSAGE%"
+    call "%LIB%\git-ops.cmd" commit "!USER_MSG!"
+    call "%LIB%\ui.cmd" step 7/9 "Commit: !USER_MSG!" "CREADO"
 ) else (
     call "%LIB%\ui.cmd" step 7/9 "Sin cambios para commit" "SKIP"
 )

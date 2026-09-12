@@ -16,6 +16,7 @@ REM ============================================================
 
 if "%~1"=="init"        goto :init
 if "%~1"=="branch_main" goto :branch_main
+if "%~1"=="has_changes" goto :has_changes
 if "%~1"=="commit"      goto :commit
 if "%~1"=="tag"         goto :tag
 goto :eof
@@ -38,15 +39,21 @@ git branch -M %BRANCH_MAIN% >nul 2>nul
 call "%~dp0ui.cmd" step 4/9 "Rama principal: %BRANCH_MAIN%" "OK"
 exit /b 0
 
-:commit
+:has_changes
 git add -A >nul 2>nul
 git diff --cached --quiet
 if errorlevel 1 (
-    git commit -q -m "%COMMIT_MESSAGE%"
     exit /b 1
 ) else (
     exit /b 0
 )
+
+:commit
+REM %~2 = mensaje opcional
+set "MSG=%~2"
+if "!MSG!"=="" set "MSG=%COMMIT_MESSAGE%"
+git commit -q -m "!MSG!"
+exit /b 1
 
 :tag
 git rev-parse %TAG_INITIAL% >nul 2>nul
