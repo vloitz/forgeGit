@@ -19,7 +19,7 @@ goto :eof
 :banner
 echo.
 echo   ############################################
-echo   #  forge-git v%FG_VERSION%                      #
+echo   #  forge-git v%FG_VERSION%                 #
 echo   #  Bootstrap universal de proyecto         #
 echo   ############################################
 echo.
