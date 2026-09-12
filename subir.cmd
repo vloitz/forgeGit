@@ -12,7 +12,7 @@ echo.
 
 if not exist ".git" (
     echo   [X] No hay repositorio Git. Ejecuta: init.cmd
-    call :pause_if_double_click
+    call :shell_if_double_click
     exit /b 1
 )
 
@@ -33,8 +33,10 @@ set /p "SAVE=  Guardar cambios primero? [S/n]: "
 if /i "!SAVE!"=="n" goto :check_remote
 echo.
 set "SKIP_HISTORIAL=1"
+set "NO_PAUSE=1"
 call "guardar.cmd"
 set "SKIP_HISTORIAL="
+set "NO_PAUSE="
 echo.
 
 :check_remote
@@ -46,7 +48,7 @@ if errorlevel 1 (
     echo.
     echo     git remote add origin https://github.com/TU-USUARIO/TU-REPO.git
     echo.
-    call :pause_if_double_click
+    call :shell_if_double_click
     exit /b 1
 )
 
@@ -68,14 +70,16 @@ set "NO_PAUSE=1"
 call "%~dp0historial.cmd"
 set "NO_PAUSE="
 
-call :pause_if_double_click
+call :shell_if_double_click
 endlocal
 exit /b 0
 
-:pause_if_double_click
+:shell_if_double_click
+if "%NO_PAUSE%"=="1" goto :eof
 echo %cmdcmdline% | find /i "%~nx0" >nul
-if not errorlevel 1 (
-    echo   Presiona cualquier tecla para cerrar...
-    pause >nul
-)
+if errorlevel 1 goto :eof
+echo.
+echo   Sesion interactiva abierta. Escribe 'exit' para cerrar.
+echo.
+cmd /k
 goto :eof

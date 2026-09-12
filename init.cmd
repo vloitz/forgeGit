@@ -146,20 +146,22 @@ if errorlevel 1 (
 
 call "%LIB%\ui.cmd" done
 
-call :pause_if_double_click
+call :shell_if_double_click
 endlocal
 exit /b 0
 
 :abort
 call "%LIB%\ui.cmd" abort
-call :pause_if_double_click
+call :shell_if_double_click
 endlocal
 exit /b 1
 
-:pause_if_double_click
+:shell_if_double_click
+if "%NO_PAUSE%"=="1" goto :eof
 echo %cmdcmdline% | find /i "%~nx0" >nul
-if not errorlevel 1 (
-    echo   Presiona cualquier tecla para cerrar...
-    pause >nul
-)
+if errorlevel 1 goto :eof
+echo.
+echo   Sesion interactiva abierta. Escribe 'exit' para cerrar.
+echo.
+cmd /k
 goto :eof
