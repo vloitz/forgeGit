@@ -24,20 +24,20 @@ goto :eof
 
 :init
 if exist ".git" (
-    call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "YA EXISTE"
+    call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "YA EXISTE"
     exit /b 0
 )
 git init -q
 if errorlevel 1 (
-    call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "ERROR"
+    call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "ERROR"
     exit /b 1
 )
-call "%~dp0ui.cmd" step 3/12 "Repositorio Git" "CREADO"
+call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "CREADO"
 exit /b 1
 
 :branch_main
 git branch -M %BRANCH_MAIN% >nul 2>nul
-call "%~dp0ui.cmd" step 4/12 "Rama principal: %BRANCH_MAIN%" "OK"
+call "%~dp0ui.cmd" step 4/14 "Rama principal: %BRANCH_MAIN%" "OK"
 exit /b 0
 
 :has_changes

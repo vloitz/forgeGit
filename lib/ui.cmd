@@ -41,10 +41,18 @@ echo   ############################################
 echo.
 echo   Comandos disponibles:
 echo.
-echo     guardar.cmd     Commit de cambios en Git
-echo     subir.cmd       Push a GitHub
-echo     respaldar.cmd   Snapshot en versiones/
-echo     historial.cmd   Ver commits, tags, snapshots
+echo     Esenciales:
+echo       init.cmd        Bootstrap
+echo       abrir.cmd       Abrir en VS Code
+echo.
+echo     Trabajo diario:
+echo       guardar.cmd     Commit de cambios
+echo       subir.cmd       Push a GitHub
+echo       historial.cmd   Ver commits recientes
+echo.
+echo     Ocasionales:
+echo       snapshots.cmd   Crear/restaurar copias
+echo       auditar.cmd     Generar reporte diff
 echo.
 goto :eof
 

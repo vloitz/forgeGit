@@ -8,8 +8,10 @@ if "%~1"=="write_gitignore" goto :write_gitignore
 if "%~1"=="write_readme"    goto :write_readme
 if "%~1"=="write_guardar"   goto :write_guardar
 if "%~1"=="write_subir"     goto :write_subir
-if "%~1"=="write_respaldar" goto :write_respaldar
+if "%~1"=="write_snapshots" goto :write_snapshots
 if "%~1"=="write_historial" goto :write_historial
+if "%~1"=="write_abrir"     goto :write_abrir
+if "%~1"=="write_auditar"   goto :write_auditar
 goto :eof
 
 :write_gitignore
@@ -24,12 +26,20 @@ goto :eof
 call :copy_template "subir.cmd.tpl" "subir.cmd"
 goto :eof
 
-:write_respaldar
-call :copy_template "respaldar.cmd.tpl" "respaldar.cmd"
+:write_snapshots
+call :copy_template "snapshots.cmd.tpl" "snapshots.cmd"
 goto :eof
 
 :write_historial
 call :copy_template "historial.cmd.tpl" "historial.cmd"
+goto :eof
+
+:write_abrir
+call :copy_template "abrir.cmd.tpl" "abrir.cmd"
+goto :eof
+
+:write_auditar
+call :copy_template "auditar.cmd.tpl" "auditar.cmd"
 goto :eof
 
 :write_readme
