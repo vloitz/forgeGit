@@ -125,10 +125,27 @@ REM   DONE
 REM ============================================================
 call "%LIB%\ui.cmd" done
 
+REM --- Pausar solo si se lanzo con doble clic ---
+call :pause_if_double_click
+
 endlocal
 exit /b 0
 
 :abort
 call "%LIB%\ui.cmd" abort
+call :pause_if_double_click
 endlocal
 exit /b 1
+
+REM ============================================================
+REM   :pause_if_double_click
+REM   Pauses only if the script was launched by double-click
+REM   (i.e. %cmdcmdline% contains the script name)
+REM ============================================================
+:pause_if_double_click
+echo %cmdcmdline% | find /i "%~nx0" >nul
+if not errorlevel 1 (
+    echo   Presiona cualquier tecla para cerrar...
+    pause >nul
+)
+goto :eof
