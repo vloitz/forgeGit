@@ -16,7 +16,6 @@ if "!ESC!"=="" (
     set "C_WH=!ESC![97m"  & set "C_RS=!ESC![0m"
 )
 
-REM --- Verifica VS Code CLI ---
 where code >nul 2>nul
 if errorlevel 1 (
     echo.
@@ -31,12 +30,11 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM --- Argumentos opcionales ---
 if "%~1"=="" (
-    echo   !C_GY%Abriendo proyecto en VS Code...!C_RS!
+    echo   !C_GY!Abriendo proyecto en VS Code...!C_RS!
     code .
 ) else (
-    echo   !C_GY%Abriendo en VS Code:!C_RS! !C_WH!%*!C_RS!
+    echo   !C_GY!Abriendo en VS Code:!C_RS! !C_WH!%*!C_RS!
     code %*
 )
 
