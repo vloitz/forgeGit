@@ -8,6 +8,12 @@ cls
 set "ROOT=%~dp0"
 set "LIB=%ROOT%lib"
 
+REM --- Force mode: init.cmd --force  o  init.cmd force ---
+set "FORCE=0"
+if /i "%~1"=="--force" set "FORCE=1"
+if /i "%~1"=="force"   set "FORCE=1"
+if /i "%~1"=="-f"      set "FORCE=1"
+
 call "%ROOT%config.cmd"
 
 for %%a in ("%CD%") do set "PROJECT_NAME=%%~nxa"
@@ -41,51 +47,75 @@ REM --- STEP 4/12: Branch main ---
 call "%LIB%\git-ops.cmd" branch_main
 
 REM --- STEP 5/12: .gitignore ---
-if exist ".gitignore" (
+if exist ".gitignore" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 5/12 ".gitignore" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_gitignore
-    call "%LIB%\ui.cmd" step 5/12 ".gitignore universal" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 5/12 ".gitignore universal" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 5/12 ".gitignore universal" "CREADO"
+    )
 )
 
 REM --- STEP 6/12: README.md ---
-if exist "README.md" (
+if exist "README.md" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 6/12 "README.md" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_readme
-    call "%LIB%\ui.cmd" step 6/12 "README.md adaptativo" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 6/12 "README.md adaptativo" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 6/12 "README.md adaptativo" "CREADO"
+    )
 )
 
 REM --- STEP 7/12: guardar.cmd ---
-if exist "guardar.cmd" (
+if exist "guardar.cmd" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 7/12 "guardar.cmd" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_guardar
-    call "%LIB%\ui.cmd" step 7/12 "guardar.cmd" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 7/12 "guardar.cmd" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 7/12 "guardar.cmd" "CREADO"
+    )
 )
 
 REM --- STEP 8/12: subir.cmd ---
-if exist "subir.cmd" (
+if exist "subir.cmd" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 8/12 "subir.cmd" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_subir
-    call "%LIB%\ui.cmd" step 8/12 "subir.cmd" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 8/12 "subir.cmd" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 8/12 "subir.cmd" "CREADO"
+    )
 )
 
 REM --- STEP 9/12: respaldar.cmd ---
-if exist "respaldar.cmd" (
+if exist "respaldar.cmd" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 9/12 "respaldar.cmd" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_respaldar
-    call "%LIB%\ui.cmd" step 9/12 "respaldar.cmd" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 9/12 "respaldar.cmd" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 9/12 "respaldar.cmd" "CREADO"
+    )
 )
 
 REM --- STEP 10/12: historial.cmd ---
-if exist "historial.cmd" (
+if exist "historial.cmd" if "%FORCE%"=="0" (
     call "%LIB%\ui.cmd" step 10/12 "historial.cmd" "YA EXISTE"
 ) else (
     call "%LIB%\templates.cmd" write_historial
-    call "%LIB%\ui.cmd" step 10/12 "historial.cmd" "CREADO"
+    if "%FORCE%"=="1" (
+        call "%LIB%\ui.cmd" step 10/12 "historial.cmd" "FORZADO"
+    ) else (
+        call "%LIB%\ui.cmd" step 10/12 "historial.cmd" "CREADO"
+    )
 )
 
 REM --- STEP 11/12: Commit ---
