@@ -59,11 +59,14 @@ echo.
 echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo   !C_BC! SNAPSHOTS!C_RS!
 echo   !C_CY!-------------------------------------------------------------!C_RS!
-if exist "versiones" (
-    dir /b /o-n "versiones" 2>nul
-) else (
-    echo   !C_GY!(sin snapshots)!C_RS!
-)
+if exist "versiones" goto :show_snaps
+echo   !C_GY!sin snapshots!C_RS!
+goto :end_snaps
+
+:show_snaps
+dir /b /o-n "versiones" 2>nul
+
+:end_snaps
 echo   !C_CY!-------------------------------------------------------------!C_RS!
 echo.
 
