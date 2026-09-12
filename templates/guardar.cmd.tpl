@@ -40,7 +40,8 @@ echo   !C_GY!Evita usar: " # : + / , en el mensaje!C_RS!
 echo.
 
 set "MSG="
-set /p "MSG=  !C_BC!Mensaje del commit!C_RS! !C_GY![Enter = Sin definir]!C_RS!: "
+echo   !C_BC!Mensaje del commit!C_RS! !C_GY![Enter = Sin definir]!C_RS!
+set /p "MSG=  "
 if "!MSG!"=="" set "MSG=Sin definir"
 
 git commit -q -m "!MSG!"
