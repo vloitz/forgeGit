@@ -9,45 +9,43 @@ echo   ============================================
 echo    Pack - Distribucion limpia
 echo   ============================================
 echo.
-echo   Empaqueta solo los archivos necesarios para
-echo   que otros usuarios usen forgeGit.
-echo.
-echo   Excluye: .git, .vscode, versiones, audits,
-echo            y todos los helpers generados.
-echo.
 
-REM --- ROOT = un nivel arriba de tools/ (forgeGit/) ---
 set "ROOT=%~dp0.."
-set "OUT=%~dp0..\..\forgeGit-dist"
+set "DIST=%~dp0..\..\forgeGit-dist"
+set "OUT=%DIST%\forgeGit"
 
 REM --- Limpiar destino previo ---
-if exist "%OUT%" (
-    echo   Limpiando distribucion anterior...
-    rmdir /s /q "%OUT%"
-)
+if exist "%DIST%" rmdir /s /q "%DIST%"
 
 mkdir "%OUT%"
 mkdir "%OUT%\lib"
 mkdir "%OUT%\templates"
+mkdir "%OUT%\tools"
+mkdir "%OUT%\tools\bin"
+mkdir "%OUT%\tests"
 
 echo   Copiando archivos core...
 copy /Y "%ROOT%\init.cmd"   "%OUT%\" >nul
 copy /Y "%ROOT%\config.cmd" "%OUT%\" >nul
+copy /Y "%ROOT%\README.md"  "%OUT%\" >nul
 
 echo   Copiando modulos internos...
-copy /Y "%ROOT%\lib\ui.cmd"        "%OUT%\lib\" >nul
-copy /Y "%ROOT%\lib\git-ops.cmd"   "%OUT%\lib\" >nul
-copy /Y "%ROOT%\lib\templates.cmd" "%OUT%\lib\" >nul
+copy /Y "%ROOT%\lib\*.cmd" "%OUT%\lib\" >nul
 
 echo   Copiando templates...
-for %%F in ("%ROOT%\templates\*.tpl") do (
-    copy /Y "%%F" "%OUT%\templates\" >nul
-)
+copy /Y "%ROOT%\templates\*.tpl" "%OUT%\templates\" >nul
+
+echo   Copiando tools...
+copy /Y "%ROOT%\tools\*.cmd" "%OUT%\tools\" >nul
+copy /Y "%ROOT%\tools\bin\*.cmd" "%OUT%\tools\bin\" >nul
+
+echo   Copiando tests...
+copy /Y "%ROOT%\tests\*.cmd" "%OUT%\tests\" >nul
 
 echo.
 echo   ============================================
-echo    Distribucion creada:
-echo    %OUT%\
+echo    Distribucion creada en:
+echo    %OUT%
 echo   ============================================
 echo.
 echo   Contenido:

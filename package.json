@@ -1,0 +1,35 @@
+{
+    "name": "forgegit",
+    "version": "1.2.0",
+    "description": "Universal Git bootstrap kit for Windows",
+    "bin": {
+        "forge": "./tools/bin/forge.cmd"
+    },
+    "files": [
+        "init.cmd",
+        "config.cmd",
+        "README.md",
+        "lib/",
+        "templates/",
+        "tests/test.cmd",
+        "tools/install.cmd",
+        "tools/uninstall.cmd",
+        "tools/restore.cmd",
+        "tools/pack.cmd",
+        "tools/release.cmd",
+        "tools/bin/forge.cmd",
+        "tools/bin/forge-update.cmd"
+    ],
+    "keywords": [
+        "git",
+        "bootstrap",
+        "windows",
+        "cli"
+    ],
+    "author": "vloitz",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vloitz/forgeGit"
+    }
+}

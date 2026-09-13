@@ -1,0 +1,30 @@
+# ================================
+# .npmignore
+# Excluye archivos que no deben ir al paquete npm
+# ================================
+
+# Backups locales
+tools/backups/
+
+# Datos de usuario
+versiones/
+audits/
+
+# Config editor
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.tmp
+
+# Git
+.git/
+.gitignore
+
+# Testing temporales
+tests/backups/
