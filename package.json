@@ -8,6 +8,7 @@
     "files": [
         "init.cmd",
         "config.cmd",
+        "MANUAL.md",
         "README.md",
         "lib/",
         "templates/",
