@@ -67,7 +67,7 @@ if errorlevel 1 (
 echo   !C_GY!Subiendo a GitHub...!C_RS!
 echo.
 
-git push -u origin main
+git push -u origin main --follow-tags
 set "RC=!ERRORLEVEL!"
 
 echo.
