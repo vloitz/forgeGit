@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 chcp 65001 >nul 2>nul
 
-cd /d "%~dp0"
+cd /d "%~dp0..\.."
 
 REM --- Detectar soporte ANSI (Windows 10+ / Windows Terminal) ---
 set "ANSI=1"
@@ -56,16 +56,16 @@ echo.
 REM --- 1. Estado actual ---
 for /f "tokens=*" %%b in ('git branch --show-current 2^>nul') do set "BRANCH=%%b"
 
-echo   !C_CYAN!●!C_RESET! !C_GRAY!Branch:!C_RESET!   !C_WHITE!!BRANCH!!C_RESET!
+echo   !C_CYAN!â—!C_RESET! !C_GRAY!Branch:!C_RESET!   !C_WHITE!!BRANCH!!C_RESET!
 
 git add -A >nul 2>nul
 git diff --cached --quiet
 if errorlevel 1 (
     set "NCH=0"
     for /f %%c in ('git diff --cached --name-only ^| find /c /v ""') do set "NCH=%%c"
-    echo   !C_CYAN!●!C_RESET! !C_GRAY!Cambios:!C_RESET!  !C_YELLOW!!NCH! archivos sin commitear!C_RESET!
+    echo   !C_CYAN!â—!C_RESET! !C_GRAY!Cambios:!C_RESET!  !C_YELLOW!!NCH! archivos sin commitear!C_RESET!
 ) else (
-    echo   !C_CYAN!●!C_RESET! !C_GRAY!Cambios:!C_RESET!  !C_GREEN!limpio!C_RESET!
+    echo   !C_CYAN!â—!C_RESET! !C_GRAY!Cambios:!C_RESET!  !C_GREEN!limpio!C_RESET!
 )
 echo.
 
@@ -199,7 +199,7 @@ if "!IS_WORK!"=="1" (
 )
 
 echo.
-echo   !C_CYAN!●!C_RESET! !C_GRAY!Comparando:!C_RESET!
+echo   !C_CYAN!â—!C_RESET! !C_GRAY!Comparando:!C_RESET!
 echo       !C_GRAY![antiguo]!C_RESET!   !C_YELLOW!!H_OLD!!C_RESET!  !C_GRAY!^(idx !OLD_IDX!^)!C_RESET!
 if "!IS_WORK!"=="1" (
     echo       !C_GRAY![reciente]!C_RESET!  !C_GREEN!working tree!C_RESET!

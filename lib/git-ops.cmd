@@ -15,6 +15,16 @@ REM     0 = nothing to do (already exists / no changes)
 REM     1 = action performed
 REM ============================================================
 
+REM --- Detectar PROJECT_ROOT ---
+REM Si git-ops.cmd esta en .forge/lib/ -> PROJECT_ROOT = ..\..
+REM Si git-ops.cmd esta en lib/       -> PROJECT_ROOT = ..
+set "ROOT=%~dp0"
+if exist "%ROOT%..\.forge" (
+    set "PROJECT_ROOT=%ROOT%..\.."
+) else (
+    set "PROJECT_ROOT=%ROOT%.."
+)
+
 if "%~1"=="init"        goto :init
 if "%~1"=="branch_main" goto :branch_main
 if "%~1"=="has_changes" goto :has_changes
@@ -23,47 +33,58 @@ if "%~1"=="tag"         goto :tag
 goto :eof
 
 :init
+pushd "%PROJECT_ROOT%"
 if exist ".git" (
-    call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "YA EXISTE"
+    popd
+    call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "YA EXISTE"
     exit /b 0
 )
 git init -q
 if errorlevel 1 (
-    call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "ERROR"
+    popd
+    call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "ERROR"
     exit /b 1
 )
-call "%~dp0ui.cmd" step 3/14 "Repositorio Git" "CREADO"
+popd
+call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "CREADO"
 exit /b 1
 
 :branch_main
+pushd "%PROJECT_ROOT%"
 git branch -M %BRANCH_MAIN% >nul 2>nul
-call "%~dp0ui.cmd" step 4/14 "Rama principal: %BRANCH_MAIN%" "OK"
+popd
+call "%~dp0ui.cmd" step 4/16 "Rama principal: %BRANCH_MAIN%" "OK"
 exit /b 0
 
 :has_changes
+pushd "%PROJECT_ROOT%"
 git add -A >nul 2>nul
 git diff --cached --quiet
-if errorlevel 1 (
-    exit /b 1
-) else (
-    exit /b 0
-)
+set "RC=%ERRORLEVEL%"
+popd
+if %RC% NEQ 0 ( exit /b 1 ) else ( exit /b 0 )
 
 :commit
-REM %~2 = mensaje opcional
 set "MSG=%~2"
 if "!MSG!"=="" set "MSG=%COMMIT_MESSAGE%"
+pushd "%PROJECT_ROOT%"
 git commit -q -m "!MSG!"
-exit /b 1
+set "RC=%ERRORLEVEL%"
+popd
+if %RC% NEQ 0 ( exit /b 0 ) else ( exit /b 1 )
 
 :tag
+pushd "%PROJECT_ROOT%"
 git rev-parse %TAG_INITIAL% >nul 2>nul
 if not errorlevel 1 (
+    popd
     exit /b 0
 )
 git rev-parse HEAD >nul 2>nul
 if errorlevel 1 (
+    popd
     exit /b 0
 )
 git tag -a %TAG_INITIAL% -m "%TAG_MESSAGE%" 2>nul
+popd
 exit /b 1
