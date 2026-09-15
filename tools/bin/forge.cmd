@@ -11,13 +11,15 @@ if /i "%~1"=="update"  goto :update
 if /i "%~1"=="help"    goto :help
 if /i "%~1"=="--help"  goto :help
 if /i "%~1"=="-h"      goto :help
+if /i "%~1"=="version" goto :version
+if /i "%~1"=="--version" goto :version
 
-REM --- Default: install ---
 goto :install
 
-REM ============================================================
-REM   HELP
-REM ============================================================
+:version
+for /f "tokens=2 delims==" %%v in ('findstr /b "set \"FG_VERSION=" "%FORGE_HOME%\.forge\config.cmd" 2^>nul') do echo %%v
+exit /b 0
+
 :help
 echo.
 echo   ============================================
@@ -26,19 +28,17 @@ echo   ============================================
 echo.
 echo   USO:
 echo     forge               Instala forgeGit en la carpeta actual
-echo     forge update        Actualiza templates/core del kit
+echo     forge update        Actualiza .forge/ del kit
+echo     forge version       Muestra la version
 echo     forge help          Esta ayuda
 echo.
 echo   QUE HACE:
-echo     - Copia init.cmd, config.cmd, lib/, templates/
-echo     - Ejecuta init.cmd automaticamente
-echo     - Deja el proyecto con 7 helpers listos
+echo     - Copia forge.cmd a la raiz
+echo     - Copia .forge/ completa (init, config, lib, templates, commands)
+echo     - Ejecuta .forge\init.cmd automaticamente
 echo.
 goto :end
 
-REM ============================================================
-REM   INSTALL
-REM ============================================================
 :install
 if /i "%TARGET%"=="%FORGE_HOME%" (
     echo.
@@ -56,8 +56,8 @@ echo   ============================================
 echo.
 
 REM --- Safety: detectar instalacion previa ---
-if exist "%TARGET%\init.cmd" (
-    echo   [!] Ya existe init.cmd en este proyecto.
+if exist "%TARGET%\.forge\init.cmd" (
+    echo   [!] Ya existe .forge\init.cmd en este proyecto.
     echo   [!] Puede ser de un forgeGit anterior.
     echo.
     set "CONFIRM="
@@ -69,25 +69,26 @@ if exist "%TARGET%\init.cmd" (
     echo.
 )
 
-if not exist "%TARGET%\lib" mkdir "%TARGET%\lib"
-if not exist "%TARGET%\templates" mkdir "%TARGET%\templates"
+REM --- Copiar forge.cmd a la raiz ---
+copy /Y "%FORGE_HOME%\forge.cmd" "%TARGET%\forge.cmd" >nul
 
-copy /Y "%FORGE_HOME%\init.cmd"   "%TARGET%\" >nul
-copy /Y "%FORGE_HOME%\config.cmd" "%TARGET%\" >nul
-copy /Y "%FORGE_HOME%\lib\*.cmd"  "%TARGET%\lib\" >nul
-copy /Y "%FORGE_HOME%\templates\*.tpl" "%TARGET%\templates\" >nul
+REM --- Copiar .forge/ completa ---
+if not exist "%TARGET%\.forge" mkdir "%TARGET%\.forge"
+robocopy "%FORGE_HOME%\.forge" "%TARGET%\.forge" /E /NFL /NDL /NJH /NJS /NC /NS /NP >nul
+
+REM --- Limpiar helpers pre-generados (instalacion limpia) ---
+if exist "%TARGET%\.forge\commands\*.cmd" (
+    del /Q "%TARGET%\.forge\commands\*.cmd" >nul 2>nul
+)
 
 echo   Archivos copiados desde forgeGit.
 echo.
 
 cd /d "%TARGET%"
-call "%TARGET%\init.cmd"
+call "%TARGET%\.forge\init.cmd"
 
 goto :end
 
-REM ============================================================
-REM   UPDATE
-REM ============================================================
 :update
 if /i "%TARGET%"=="%FORGE_HOME%" (
     echo.
@@ -97,7 +98,7 @@ if /i "%TARGET%"=="%FORGE_HOME%" (
     exit /b 1
 )
 
-if not exist "%TARGET%\init.cmd" (
+if not exist "%TARGET%\.forge\init.cmd" (
     echo.
     echo   [X] Este proyecto no tiene forgeGit instalado.
     echo       Ejecuta primero: forge
@@ -112,26 +113,20 @@ echo    %TARGET%
 echo   ============================================
 echo.
 
-echo   Actualizando core (init.cmd, config.cmd)...
-copy /Y "%FORGE_HOME%\init.cmd"   "%TARGET%\" >nul
-copy /Y "%FORGE_HOME%\config.cmd" "%TARGET%\" >nul
+echo   Actualizando forge.cmd...
+copy /Y "%FORGE_HOME%\forge.cmd" "%TARGET%\forge.cmd" >nul
 
-echo   Actualizando lib/...
-if not exist "%TARGET%\lib" mkdir "%TARGET%\lib"
-robocopy "%FORGE_HOME%\lib" "%TARGET%\lib" /E /NFL /NDL /NJH /NJS /NC /NS /NP >nul
-
-echo   Actualizando templates/...
-if not exist "%TARGET%\templates" mkdir "%TARGET%\templates"
-robocopy "%FORGE_HOME%\templates" "%TARGET%\templates" /E /NFL /NDL /NJH /NJS /NC /NS /NP >nul
+echo   Actualizando .forge/...
+robocopy "%FORGE_HOME%\.forge" "%TARGET%\.forge" /E /NFL /NDL /NJH /NJS /NC /NS /NP >nul
 
 echo.
 echo   [OK] Actualizado.
 echo.
-echo   Nota: los helpers (guardar, subir, etc.) NO se
+echo   Nota: los helpers (.forge\commands\) NO se
 echo         regeneran automaticamente.
 echo.
 echo   Para regenerarlos:
-echo     init.cmd --force
+echo     forge init --force
 echo.
 
 goto :end
