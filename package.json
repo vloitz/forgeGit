@@ -1,6 +1,6 @@
 {
     "name": "forgegit",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Universal Git bootstrap kit for Windows",
     "bin": {
         "forge": "./tools/bin/forge.cmd"
@@ -8,8 +8,10 @@
     "files": [
         "init.cmd",
         "config.cmd",
+        "forge.cmd",
         "MANUAL.md",
         "README.md",
+        ".forge/",
         "lib/",
         "templates/",
         "tests/test.cmd",
