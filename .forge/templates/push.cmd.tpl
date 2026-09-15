@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 chcp 65001 >nul 2>nul
 
-cd /d "%~dp0"
+cd /d "%~dp0..\.."
 
 REM --- Colores ANSI (con fallback) ---
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
@@ -18,7 +18,7 @@ if "!ESC!"=="" (
 
 echo.
 echo   !C_CY!============================================!C_RS!
-echo   !C_BC! SUBIR!C_RS! !C_GY!- Push a GitHub!C_RS!
+echo   !C_BC! PUSH!C_RS! !C_GY!- Push a GitHub!C_RS!
 echo   !C_CY!============================================!C_RS!
 echo.
 

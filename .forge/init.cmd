@@ -8,8 +8,6 @@ cls
 set "ROOT=%~dp0"
 
 REM --- Detectar donde esta lib/ y templates/ ---
-REM Si existe .forge/lib/ -> modo proyecto (post-install)
-REM Si existe lib/        -> modo dev (kit original)
 if exist ".forge\lib\ui.cmd" (
     set "LIB=%ROOT%.forge\lib"
     set "TPL=%ROOT%.forge\templates"
@@ -59,88 +57,98 @@ REM --- STEP 4/16: Branch main ---
 call "%LIB%\git-ops.cmd" branch_main
 
 REM --- STEP 5/16: Crear estructura .forge/ ---
-if exist ".forge\commands\save.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 5/16 "Estructura .forge/" "YA EXISTE"
-) else (
-    if not exist ".forge" mkdir ".forge"
-    if not exist ".forge\commands" mkdir ".forge\commands"
-    if not exist ".forge\lib" mkdir ".forge\lib"
-    if not exist ".forge\templates" mkdir ".forge\templates"
-    call "%LIB%\ui.cmd" step 5/16 "Estructura .forge/" "CREADO"
-)
+if exist ".forge\commands" goto :step5_ok
+mkdir ".forge" 2>nul
+mkdir ".forge\commands" 2>nul
+mkdir ".forge\lib" 2>nul
+mkdir ".forge\templates" 2>nul
+call "%LIB%\ui.cmd" step 5/16 "Estructura .forge/" "CREADO"
+goto :step6
+:step5_ok
+call "%LIB%\ui.cmd" step 5/16 "Estructura .forge/" "YA EXISTE"
 
+:step6
 REM --- STEP 6/16: .gitignore ---
-if exist ".gitignore" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 6/16 ".gitignore" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_gitignore
-    call "%LIB%\ui.cmd" step 6/16 ".gitignore universal" "CREADO"
-)
+if exist ".gitignore" goto :step6_ok
+call "%LIB%\templates.cmd" write_gitignore
+call "%LIB%\ui.cmd" step 6/16 ".gitignore universal" "CREADO"
+goto :step7
+:step6_ok
+call "%LIB%\ui.cmd" step 6/16 ".gitignore" "YA EXISTE"
 
+:step7
 REM --- STEP 7/16: README.md ---
-if exist "README.md" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 7/16 "README.md" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_readme
-    call "%LIB%\ui.cmd" step 7/16 "README.md adaptativo" "CREADO"
-)
+if exist "README.md" goto :step7_ok
+call "%LIB%\templates.cmd" write_readme
+call "%LIB%\ui.cmd" step 7/16 "README.md adaptativo" "CREADO"
+goto :step8
+:step7_ok
+call "%LIB%\ui.cmd" step 7/16 "README.md" "YA EXISTE"
 
-REM --- STEP 8/16: forge.cmd (raiz) ---
-if exist "forge.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 8/16 "forge.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_forge
-    call "%LIB%\ui.cmd" step 8/16 "forge.cmd menu" "CREADO"
-)
+:step8
+REM --- STEP 8/16: forge.cmd ---
+if exist "forge.cmd" goto :step8_ok
+call "%LIB%\templates.cmd" write_forge
+call "%LIB%\ui.cmd" step 8/16 "forge.cmd menu" "CREADO"
+goto :step9
+:step8_ok
+call "%LIB%\ui.cmd" step 8/16 "forge.cmd" "YA EXISTE"
 
+:step9
 REM --- STEP 9/16: save.cmd ---
-if exist ".forge\commands\save.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 9/16 "save.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_save
-    call "%LIB%\ui.cmd" step 9/16 "save.cmd" "CREADO"
-)
+if exist ".forge\commands\save.cmd" goto :step9_ok
+call "%LIB%\templates.cmd" write_save
+call "%LIB%\ui.cmd" step 9/16 "save.cmd" "CREADO"
+goto :step10
+:step9_ok
+call "%LIB%\ui.cmd" step 9/16 "save.cmd" "YA EXISTE"
 
+:step10
 REM --- STEP 10/16: push.cmd ---
-if exist ".forge\commands\push.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 10/16 "push.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_push
-    call "%LIB%\ui.cmd" step 10/16 "push.cmd" "CREADO"
-)
+if exist ".forge\commands\push.cmd" goto :step10_ok
+call "%LIB%\templates.cmd" write_push
+call "%LIB%\ui.cmd" step 10/16 "push.cmd" "CREADO"
+goto :step11
+:step10_ok
+call "%LIB%\ui.cmd" step 10/16 "push.cmd" "YA EXISTE"
 
+:step11
 REM --- STEP 11/16: snapshots.cmd ---
-if exist ".forge\commands\snapshots.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 11/16 "snapshots.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_snapshots
-    call "%LIB%\ui.cmd" step 11/16 "snapshots.cmd" "CREADO"
-)
+if exist ".forge\commands\snapshots.cmd" goto :step11_ok
+call "%LIB%\templates.cmd" write_snapshots
+call "%LIB%\ui.cmd" step 11/16 "snapshots.cmd" "CREADO"
+goto :step12
+:step11_ok
+call "%LIB%\ui.cmd" step 11/16 "snapshots.cmd" "YA EXISTE"
 
+:step12
 REM --- STEP 12/16: historial.cmd ---
-if exist ".forge\commands\historial.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 12/16 "historial.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_historial
-    call "%LIB%\ui.cmd" step 12/16 "historial.cmd" "CREADO"
-)
+if exist ".forge\commands\historial.cmd" goto :step12_ok
+call "%LIB%\templates.cmd" write_historial
+call "%LIB%\ui.cmd" step 12/16 "historial.cmd" "CREADO"
+goto :step13
+:step12_ok
+call "%LIB%\ui.cmd" step 12/16 "historial.cmd" "YA EXISTE"
 
+:step13
 REM --- STEP 13/16: abrir.cmd ---
-if exist ".forge\commands\abrir.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 13/16 "abrir.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_abrir
-    call "%LIB%\ui.cmd" step 13/16 "abrir.cmd" "CREADO"
-)
+if exist ".forge\commands\abrir.cmd" goto :step13_ok
+call "%LIB%\templates.cmd" write_abrir
+call "%LIB%\ui.cmd" step 13/16 "abrir.cmd" "CREADO"
+goto :step14
+:step13_ok
+call "%LIB%\ui.cmd" step 13/16 "abrir.cmd" "YA EXISTE"
 
+:step14
 REM --- STEP 14/16: auditar.cmd ---
-if exist ".forge\commands\auditar.cmd" if "%FORCE%"=="0" (
-    call "%LIB%\ui.cmd" step 14/16 "auditar.cmd" "YA EXISTE"
-) else (
-    call "%LIB%\templates.cmd" write_auditar
-    call "%LIB%\ui.cmd" step 14/16 "auditar.cmd" "CREADO"
-)
+if exist ".forge\commands\auditar.cmd" goto :step14_ok
+call "%LIB%\templates.cmd" write_auditar
+call "%LIB%\ui.cmd" step 14/16 "auditar.cmd" "CREADO"
+goto :step15
+:step14_ok
+call "%LIB%\ui.cmd" step 14/16 "auditar.cmd" "YA EXISTE"
 
+:step15
 REM --- STEP 15/16: Commit ---
 call "%LIB%\git-ops.cmd" has_changes
 if errorlevel 1 (

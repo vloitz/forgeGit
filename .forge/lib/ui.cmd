@@ -1,13 +1,7 @@
 @echo off
 REM ============================================================
 REM   forge-git / lib/ui.cmd
-REM   UI helpers - banner and status messages
-REM
-REM   Usage:
-REM     call "ui.cmd" banner
-REM     call "ui.cmd" step 1/12 "Node.js v20" "OK"
-REM     call "ui.cmd" done
-REM     call "ui.cmd" abort
+REM   UI helpers
 REM ============================================================
 
 if "%~1"=="banner" goto :banner
@@ -29,7 +23,6 @@ echo.
 goto :eof
 
 :step
-REM %2 = step id (1/12), %3 = label, %4 = status
 echo   [%~2] %~3    %~4
 goto :eof
 
@@ -43,16 +36,18 @@ echo   Comandos disponibles:
 echo.
 echo     Esenciales:
 echo       init.cmd        Bootstrap
-echo       abrir.cmd       Abrir en VS Code
+echo       forge.cmd       Menu interactivo
 echo.
-echo     Trabajo diario:
-echo       guardar.cmd     Commit de cambios
-echo       subir.cmd       Push a GitHub
-echo       historial.cmd   Ver commits recientes
+echo     Uso CLI directo:
+echo       forge save      Commit de cambios
+echo       forge push      Push a GitHub
+echo       forge log       Ver commits
 echo.
-echo     Ocasionales:
-echo       snapshots.cmd   Crear/restaurar copias
-echo       auditar.cmd     Generar reporte diff
+echo     Otros:
+echo       forge snap      Snapshots
+echo       forge audit     Reporte diff
+echo       forge open      Abrir en VS Code
+echo       forge help      Ayuda completa
 echo.
 goto :eof
 
