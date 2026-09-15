@@ -94,6 +94,9 @@ Abre VS Code en el proyecto. Desde ahi:
 4. Recomenda "forge snap" antes de cambios grandes.
 5. Si un cambio falla, deci exactamente que comando de git usar.
 6. No mezcles cambios buenos con malos en el mismo bloque.
+7. Preserva comentarios del usuario por defecto. Solo actualiza
+   un comentario si describe codigo que cambio. No preguntes
+   por comentarios triviales ni redundantes.
 
 ---
 
