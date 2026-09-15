@@ -13,6 +13,7 @@ if "%~1"=="write_snapshots"  goto :write_snapshots
 if "%~1"=="write_historial"  goto :write_historial
 if "%~1"=="write_abrir"      goto :write_abrir
 if "%~1"=="write_auditar"    goto :write_auditar
+if "%~1"=="write_serve"      goto :write_serve
 goto :eof
 
 REM --- Templates que van a la RAIZ ---
@@ -53,6 +54,12 @@ goto :eof
 call :copy_cmd "auditar.cmd.tpl" "auditar.cmd"
 goto :eof
 
+REM --- Serve: copia serve.cmd + serve-static.js ---
+:write_serve
+call :copy_cmd "serve.cmd.tpl" "serve.cmd"
+call :copy_forge_root "serve-static.js" "serve-static.js"
+goto :eof
+
 REM ============================================================
 REM   :copy_root - Copy to project root
 REM ============================================================
@@ -72,6 +79,19 @@ REM ============================================================
 :copy_cmd
 set "SRC=%~dp0..\templates\%~1"
 set "DST=%~dp0..\commands\%~2"
+if not exist "%SRC%" (
+    echo   [X] Template no encontrado: %SRC%
+    exit /b 1
+)
+copy /Y "%SRC%" "%DST%" >nul
+exit /b 0
+
+REM ============================================================
+REM   :copy_forge_root - Copy to .forge/ (raiz de .forge)
+REM ============================================================
+:copy_forge_root
+set "SRC=%~dp0..\templates\%~1"
+set "DST=%~dp0..\%~2"
 if not exist "%SRC%" (
     echo   [X] Template no encontrado: %SRC%
     exit /b 1

@@ -28,7 +28,7 @@ if not exist "%CMD_DIR%\save.cmd" (
     exit /b 1
 )
 
-REM --- Modo CLI directo (forge save, forge push, etc) ---
+REM --- Modo CLI directo ---
 if not "%~1"=="" (
     if /i "%~1"=="save"   ( call "%CMD_DIR%\save.cmd"      & exit /b 0 )
     if /i "%~1"=="push"   ( call "%CMD_DIR%\push.cmd"      & exit /b 0 )
@@ -36,6 +36,7 @@ if not "%~1"=="" (
     if /i "%~1"=="log"    ( call "%CMD_DIR%\historial.cmd" & exit /b 0 )
     if /i "%~1"=="audit"  ( call "%CMD_DIR%\auditar.cmd"   & exit /b 0 )
     if /i "%~1"=="open"   ( call "%CMD_DIR%\abrir.cmd"     & exit /b 0 )
+    if /i "%~1"=="serve"  ( call "%CMD_DIR%\serve.cmd"     & exit /b 0 )
     if /i "%~1"=="help"   goto :help
     if /i "%~1"=="-h"     goto :help
     if /i "%~1"=="--help" goto :help
@@ -45,7 +46,7 @@ if not "%~1"=="" (
 )
 
 REM ============================================================
-REM   MENU PRINCIPAL (doble clic sin argumentos)
+REM   MENU PRINCIPAL
 REM ============================================================
 :menu
 cls
@@ -63,6 +64,7 @@ echo   !C_BC!Herramientas:!C_RS!
 echo     !C_YE![4]!C_RS! Snapshots            !C_GY!(backup/restore)!C_RS!
 echo     !C_YE![5]!C_RS! Auditar cambios      !C_GY!(diff report)!C_RS!
 echo     !C_YE![6]!C_RS! Abrir en VS Code
+echo     !C_YE![7]!C_RS! Servidor dev         !C_GY!(auto-detect)!C_RS!
 echo.
 echo   !C_BC!Sistema:!C_RS!
 echo     !C_YE![0]!C_RS! Salir
@@ -79,6 +81,7 @@ if "!OPT!"=="3" ( call "%CMD_DIR%\historial.cmd" & echo. & pause & goto :menu )
 if "!OPT!"=="4" ( call "%CMD_DIR%\snapshots.cmd" & echo. & pause & goto :menu )
 if "!OPT!"=="5" ( call "%CMD_DIR%\auditar.cmd"   & echo. & pause & goto :menu )
 if "!OPT!"=="6" ( call "%CMD_DIR%\abrir.cmd"     & echo. & pause & goto :menu )
+if "!OPT!"=="7" ( call "%CMD_DIR%\serve.cmd"     & echo. & pause & goto :menu )
 if "!OPT!"=="0" goto :end
 if /i "!OPT!"=="q" goto :end
 
@@ -101,6 +104,7 @@ echo     !C_WH!forge snap!C_RS!         Snapshots
 echo     !C_WH!forge log!C_RS!          Historial
 echo     !C_WH!forge audit!C_RS!        Auditar cambios
 echo     !C_WH!forge open!C_RS!         Abrir en VS Code
+echo     !C_WH!forge serve!C_RS!        Servidor de desarrollo
 echo     !C_WH!forge help!C_RS!         Esta ayuda
 echo.
 goto :end

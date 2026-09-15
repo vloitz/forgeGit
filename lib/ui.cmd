@@ -47,6 +47,7 @@ echo     Otros:
 echo       forge snap      Snapshots
 echo       forge audit     Reporte diff
 echo       forge open      Abrir en VS Code
+echo       forge serve     Servidor de desarrollo
 echo       forge help      Ayuda completa
 echo.
 goto :eof
