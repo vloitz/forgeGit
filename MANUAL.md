@@ -1,68 +1,61 @@
-cd "E:\MASTER\Proyectos\2026\Toolkit\Sys\forgeGit"
+# forgeGit - Manual de uso
 
-$content = @'
-============================================================
-  forgeGit - MANUAL PERSONAL
-============================================================
+Guia completa de instalacion, uso y mantenimiento.
 
-INSTALAR EN PC NUEVA (una sola vez)
-------------------------------------------------------------
-  npm install -g forgegit
+## Instalacion
 
+    npm install -g forgegit
 
-USAR EN UN PROYECTO NUEVO
-------------------------------------------------------------
-  cd ruta\del\proyecto
-  forge
+O descarga el ZIP desde:
+https://github.com/vloitz/forgeGit/releases/latest
 
-  Listo. El proyecto queda con Git + 7 helpers.
+Requisitos: Windows 10/11, Node.js 18+, Git 2.30+
 
+## Uso en un proyecto nuevo
 
-COMANDOS DEL DIA A DIA
-------------------------------------------------------------
-  guardar.cmd     Commit cambios
-  subir.cmd       Push a GitHub
-  snapshots.cmd   Crear/restaurar copia de seguridad
-  historial.cmd   Ver commits recientes
-  auditar.cmd     Generar reporte diff
-  abrir.cmd       Abrir en VS Code
-  init.cmd        Re-bootstrap (raro, solo si rompes algo)
+    cd ruta\del\proyecto
+    forge
 
+El proyecto queda con Git, .gitignore, README.md, commit inicial,
+tag v1.0.0 y 7 helpers en .forge/commands/.
 
-ACTUALIZAR EL KIT (cuando hay version nueva)
-------------------------------------------------------------
-  npm install -g forgegit@latest
+## Comandos disponibles
 
-  En cada proyecto existente:
-  forge update
+| Comando | Descripcion |
+|---------|-------------|
+| forge save | Commit de cambios |
+| forge push | Push a GitHub |
+| forge log | Ver commits recientes |
+| forge snap | Crear/restaurar snapshots |
+| forge audit | Generar reporte diff |
+| forge open | Abrir en VS Code |
+| forge serve | Servidor de desarrollo (auto-detect) |
+| forge help | Ayuda completa |
 
+## Estructura del proyecto
 
-PUBLICAR NUEVA VERSION DEL KIT (yo, autor)
-------------------------------------------------------------
-  cd E:\MASTER\Proyectos\2026\Toolkit\Sys\forgeGit
+    MiProyecto/
+    ├── forge.cmd          Menu + CLI
+    ├── init.cmd           Bootstrap
+    ├── config.cmd         Configuracion
+    ├── .forge/
+    │   ├── commands/      6 helpers
+    │   ├── lib/           Modulos internos
+    │   ├── templates/     Fuentes .tpl
+    │   └── serve-static.js
+    └── (tus archivos)
 
-  1. Editar config.cmd y subir version (ej: 1.2.0 -> 1.3.0)
-  2. guardar.cmd      (mensaje: release 1.3.0)
-  3. subir.cmd
-  4. npm publish
-  5. tools\pack.cmd   (regenera dist)
-  6. git tag -a v1.3.0 -m "Version 1.3.0"
-  7. git push origin --tags
-  8. Subir ZIP a GitHub Releases
+## Actualizar
 
+    npm install -g forgegit@latest
+    forge update
 
-LINKS UTILES
-------------------------------------------------------------
-  Repo:      https://github.com/vloitz/forgeGit
-  npm:       https://www.npmjs.com/package/forgegit
-  Releases:  https://github.com/vloitz/forgeGit/releases
+## Links
 
-============================================================
-'@
+- Repo: https://github.com/vloitz/forgeGit
+- npm: https://www.npmjs.com/package/forgegit
+- Releases: https://github.com/vloitz/forgeGit/releases
 
-$utf8 = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText("$PWD\MANUAL.txt", $content, $utf8)
+## Licencia
 
-Write-Host "  [OK] MANUAL.txt creado" -ForegroundColor Green
-Write-Host ""
-Get-Item "MANUAL.txt" | Select-Object Name, Length
+MIT

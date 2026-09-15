@@ -16,7 +16,6 @@ if "%~1"=="write_auditar"    goto :write_auditar
 if "%~1"=="write_serve"      goto :write_serve
 goto :eof
 
-REM --- Templates que van a la RAIZ ---
 :write_gitignore
 call :copy_root "gitignore.tpl" ".gitignore"
 goto :eof
@@ -29,7 +28,6 @@ goto :eof
 call :copy_root "forge.cmd.tpl" "forge.cmd"
 goto :eof
 
-REM --- Templates que van a .forge/commands/ ---
 :write_save
 call :copy_cmd "save.cmd.tpl" "save.cmd"
 goto :eof
@@ -54,15 +52,11 @@ goto :eof
 call :copy_cmd "auditar.cmd.tpl" "auditar.cmd"
 goto :eof
 
-REM --- Serve: copia serve.cmd + serve-static.js ---
 :write_serve
 call :copy_cmd "serve.cmd.tpl" "serve.cmd"
 call :copy_forge_root "serve-static.js" "serve-static.js"
 goto :eof
 
-REM ============================================================
-REM   :copy_root - Copy to project root
-REM ============================================================
 :copy_root
 set "SRC=%~dp0..\templates\%~1"
 set "DST=%~dp0..\..\%~2"
@@ -73,9 +67,6 @@ if not exist "%SRC%" (
 copy /Y "%SRC%" "%DST%" >nul
 exit /b 0
 
-REM ============================================================
-REM   :copy_cmd - Copy to .forge/commands/
-REM ============================================================
 :copy_cmd
 set "SRC=%~dp0..\templates\%~1"
 set "DST=%~dp0..\commands\%~2"
@@ -86,9 +77,6 @@ if not exist "%SRC%" (
 copy /Y "%SRC%" "%DST%" >nul
 exit /b 0
 
-REM ============================================================
-REM   :copy_forge_root - Copy to .forge/ (raiz de .forge)
-REM ============================================================
 :copy_forge_root
 set "SRC=%~dp0..\templates\%~1"
 set "DST=%~dp0..\%~2"
@@ -99,9 +87,6 @@ if not exist "%SRC%" (
 copy /Y "%SRC%" "%DST%" >nul
 exit /b 0
 
-REM ============================================================
-REM   :apply_root - Copy with substitution to project root
-REM ============================================================
 :apply_root
 set "SRC=%~dp0..\templates\%~1"
 set "DST=%~dp0..\..\%~2"
@@ -109,9 +94,5 @@ if not exist "%SRC%" (
     echo   [X] Template no encontrado: %SRC%
     exit /b 1
 )
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$c = Get-Content -Raw -LiteralPath '%SRC%';" ^
-  "$c = $c.Replace('{{PROJECT_NAME}}', '%PROJECT_NAME%');" ^
-  "$c = $c.Replace('{{FG_VERSION}}', '%FG_VERSION%');" ^
-  "[System.IO.File]::WriteAllText('%DST%', $c, [System.Text.UTF8Encoding]::new($false))"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = Get-Content -Raw -LiteralPath '%SRC%'; $c = $c.Replace('{{PROJECT_NAME}}', '%PROJECT_NAME%'); $c = $c.Replace('{{FG_VERSION}}', '%FG_VERSION%'); [System.IO.File]::WriteAllText('%DST%', $c, [System.Text.UTF8Encoding]::new($false))"
 exit /b 0

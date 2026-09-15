@@ -38,24 +38,24 @@ goto :eof
 pushd "%PROJECT_ROOT%"
 if exist ".git" (
     popd
-    call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "YA EXISTE"
+    call "%~dp0ui.cmd" step 3/17 "Repositorio Git" "YA EXISTE"
     exit /b 0
 )
 git init -q
 if errorlevel 1 (
     popd
-    call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "ERROR"
+    call "%~dp0ui.cmd" step 3/17 "Repositorio Git" "ERROR"
     exit /b 1
 )
 popd
-call "%~dp0ui.cmd" step 3/16 "Repositorio Git" "CREADO"
+call "%~dp0ui.cmd" step 3/17 "Repositorio Git" "CREADO"
 exit /b 1
 
 :branch_main
 pushd "%PROJECT_ROOT%"
 git branch -M %BRANCH_MAIN% >nul 2>nul
 popd
-call "%~dp0ui.cmd" step 4/16 "Rama principal: %BRANCH_MAIN%" "OK"
+call "%~dp0ui.cmd" step 4/17 "Rama principal: %BRANCH_MAIN%" "OK"
 exit /b 0
 
 :has_changes
