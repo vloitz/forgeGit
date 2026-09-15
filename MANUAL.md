@@ -35,15 +35,17 @@ tag v1.0.0 y 7 helpers en .forge/commands/.
 ## Estructura del proyecto
 
     MiProyecto/
-    ├── forge.cmd          Menu + CLI
-    ├── init.cmd           Bootstrap
-    ├── config.cmd         Configuracion
-    ├── .forge/
-    │   ├── commands/      6 helpers
-    │   ├── lib/           Modulos internos
-    │   ├── templates/     Fuentes .tpl
-    │   └── serve-static.js
-    └── (tus archivos)
+    |-- forge.cmd          Menu + CLI (unico .cmd visible)
+    |-- .forge/
+    |   |-- init.cmd       Bootstrap
+    |   |-- config.cmd     Configuracion
+    |   |-- commands/      7 helpers
+    |   |-- lib/           Modulos internos
+    |   |-- templates/     Fuentes .tpl
+    |   +-- serve-static.js
+    |-- versiones/         Snapshots
+    |-- audits/            Reportes diff
+    +-- (tus archivos)
 
 ## Actualizar
 

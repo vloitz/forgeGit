@@ -2,6 +2,11 @@
 
 Universal Git bootstrap kit for Windows.
 
+> **¿Vas a trabajar con IA (ChatGPT, DeepSeek, Claude, Gemini, Cursor)?**
+> Lee primero [WORKFLOW.md](WORKFLOW.md) para entender las reglas de
+> trabajo, el formato quirúrgico de instrucciones, y los comandos de
+> rescate.
+
 ## What it is
 
 forgeGit is a small toolkit that eliminates the repetitive setup work
