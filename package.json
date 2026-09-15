@@ -9,6 +9,7 @@
         "forge.cmd",
         "MANUAL.md",
         "README.md",
+        "WORKFLOW.md",
         ".forge/",
         "tests/test.cmd",
         "tools/install.cmd",
@@ -19,7 +20,12 @@
         "tools/bin/forge.cmd",
         "tools/bin/forge-update.cmd"
     ],
-    "keywords": ["git", "bootstrap", "windows", "cli"],
+    "keywords": [
+        "git",
+        "bootstrap",
+        "windows",
+        "cli"
+    ],
     "author": "vloitz",
     "license": "MIT",
     "repository": {

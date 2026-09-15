@@ -60,6 +60,34 @@ Toda instruccion para modificar codigo DEBE ser:
 
 Si sos una IA leyendo este documento:
 
+### Herramienta correcta segun el caso
+
+| Caso | Herramienta |
+|------|-------------|
+| Crear archivo NUEVO (.md, .txt, README) | Notepad (rapido) |
+| Editar codigo existente (HTML, JS, CSS) | VS Code (forge open) |
+| Aplicar cambio quirurgico de la IA | VS Code (Ctrl+H para reemplazar) |
+| Ver diff de cambios | VS Code (Source Control) o git diff |
+| Comparar 2 versiones | VS Code (Ctrl+Shift+P -> Compare) |
+
+### PROHIBIDO usar Notepad para
+
+- Editar archivos de codigo existentes (no tiene reemplazo confiable)
+- Aplicar cambios quirurgicos de la IA
+- Ver/editar archivos con mas de 50 lineas
+- Editar archivos con encoding especial (UTF-8 con BOM, CRLF)
+
+### Comando correcto para editar codigo
+
+    forge open
+
+Abre VS Code en el proyecto. Desde ahi:
+- Ctrl+F para buscar
+- Ctrl+H para reemplazar
+- Ctrl+S para guardar
+- Ctrl+Shift+F para buscar en todo el proyecto
+
+
 1. Toda instruccion de codigo usa formato busca/reemplaza exacto.
 2. No asumas ubicaciones. Siempre especifica linea exacta.
 3. Un cambio a la vez. Si son 3 archivos, dalos por separado.
