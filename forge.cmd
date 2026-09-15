@@ -17,12 +17,13 @@ if "!ESC!"=="" (
 )
 
 set "CMD_DIR=.forge\commands"
+set "INIT_CMD=.forge\init.cmd"
 
 REM --- Verificar instalacion ---
-if not exist "%CMD_DIR%\save.cmd" (
+if not exist "%INIT_CMD%" (
     echo.
-    echo   !C_RE![X]!C_RS! forgeGit no esta instalado aqui.
-    echo   !C_GY!Ejecuta desde un proyecto nuevo:!C_RS! forge
+    echo   !C_RE![X]!C_RS! forgeGit no esta instalado correctamente.
+    echo   !C_GY!Falta .forge\init.cmd!C_RS!
     echo.
     pause
     exit /b 1
@@ -30,6 +31,7 @@ if not exist "%CMD_DIR%\save.cmd" (
 
 REM --- Modo CLI directo ---
 if not "%~1"=="" (
+    if /i "%~1"=="init"   ( call "%INIT_CMD%" %2 %3 & exit /b 0 )
     if /i "%~1"=="save"   ( call "%CMD_DIR%\save.cmd"      & exit /b 0 )
     if /i "%~1"=="push"   ( call "%CMD_DIR%\push.cmd"      & exit /b 0 )
     if /i "%~1"=="snap"   ( call "%CMD_DIR%\snapshots.cmd" & exit /b 0 )
@@ -67,6 +69,7 @@ echo     !C_YE![6]!C_RS! Abrir en VS Code
 echo     !C_YE![7]!C_RS! Servidor dev         !C_GY!(auto-detect)!C_RS!
 echo.
 echo   !C_BC!Sistema:!C_RS!
+echo     !C_YE![r]!C_RS! Re-bootstrap         !C_GY!(init --force)!C_RS!
 echo     !C_YE![0]!C_RS! Salir
 echo.
 echo   !C_CY!--------------------------------------------!C_RS!
@@ -82,6 +85,7 @@ if "!OPT!"=="4" ( call "%CMD_DIR%\snapshots.cmd" & echo. & pause & goto :menu )
 if "!OPT!"=="5" ( call "%CMD_DIR%\auditar.cmd"   & echo. & pause & goto :menu )
 if "!OPT!"=="6" ( call "%CMD_DIR%\abrir.cmd"     & echo. & pause & goto :menu )
 if "!OPT!"=="7" ( call "%CMD_DIR%\serve.cmd"     & echo. & pause & goto :menu )
+if /i "!OPT!"=="r" ( call "%INIT_CMD%" --force   & echo. & pause & goto :menu )
 if "!OPT!"=="0" goto :end
 if /i "!OPT!"=="q" goto :end
 
@@ -98,6 +102,8 @@ echo   !C_CY!============================================!C_RS!
 echo.
 echo   !C_BC!USO:!C_RS!
 echo     !C_WH!forge!C_RS!              Menu interactivo
+echo     !C_WH!forge init!C_RS!         Bootstrap (re-instalar)
+echo     !C_WH!forge init --force!C_RS! Regenerar todo
 echo     !C_WH!forge save!C_RS!         Guardar cambios
 echo     !C_WH!forge push!C_RS!         Subir a GitHub
 echo     !C_WH!forge snap!C_RS!         Snapshots
