@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 chcp 65001 >nul 2>nul
 
-cd /d "%~dp0"
+cd /d "%~dp0..\.."
 
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 if "!ESC!"=="" (
