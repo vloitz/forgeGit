@@ -19,7 +19,9 @@ REM --- Detectar PROJECT_ROOT ---
 REM Si git-ops.cmd esta en .forge/lib/ -> PROJECT_ROOT = ..\..
 REM Si git-ops.cmd esta en lib/       -> PROJECT_ROOT = ..
 set "ROOT=%~dp0"
-if exist "%ROOT%..\.forge" (
+REM Detectar si estamos dentro de .forge
+echo "%ROOT%" | find /i ".forge" >nul
+if not errorlevel 1 (
     set "PROJECT_ROOT=%ROOT%..\.."
 ) else (
     set "PROJECT_ROOT=%ROOT%.."
