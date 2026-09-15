@@ -1,6 +1,6 @@
 {
     "name": "forgegit",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "description": "Universal Git bootstrap kit for Windows",
     "bin": {
         "forge": "./tools/bin/forge.cmd"
