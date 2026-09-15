@@ -6,6 +6,13 @@ REM --- FORGE_HOME desde tools/bin/ ---
 for %%I in ("%~dp0..\..") do set "FORGE_HOME=%%~fI"
 set "TARGET=%CD%"
 
+REM --- Deteccion de proyecto local ---
+REM Si existe forge.cmd en el directorio actual, delegar a el
+if exist "%TARGET%\forge.cmd" (
+    call "%TARGET%\forge.cmd" %*
+    exit /b %ERRORLEVEL%
+)
+
 REM --- Subcomandos ---
 if /i "%~1"=="update"  goto :update
 if /i "%~1"=="help"    goto :help
