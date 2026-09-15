@@ -17,7 +17,7 @@ if /i "%~1"=="--version" goto :version
 goto :install
 
 :version
-for /f "tokens=2 delims==" %%v in ('findstr /b "set \"FG_VERSION=" "%FORGE_HOME%\.forge\config.cmd" 2^>nul') do echo %%v
+powershell -NoProfile -Command "(Get-Content -LiteralPath '%FORGE_HOME%\.forge\config.cmd' | Select-String 'FG_VERSION=').ToString().Split('=')[1].Trim('\"', ' ')"
 exit /b 0
 
 :help
