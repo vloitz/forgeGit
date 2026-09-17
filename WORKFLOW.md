@@ -30,6 +30,103 @@ Toda instruccion para modificar codigo DEBE ser:
 2. Ubicacion exacta (busca / reemplaza / pega debajo)
 3. Sin ambiguedad
 
+---
+
+## Regla crítica: bloques VERBATIM
+
+### El problema
+
+La IA tiende a "limpiar" visualmente el código antes de darlo como
+bloque de búsqueda: quita líneas en blanco, normaliza espacios,
+reindenta. El humano busca ese bloque en VS Code con Ctrl+H y NO LO
+ENCUENTRA, porque el código real tiene 1 línea en blanco de más, o
+un espacio extra, o una indentación distinta.
+
+El humano pierde tiempo reportando el bloque actual, la IA da otro
+bloque "corregido" que también falla, y el ciclo se repite.
+
+### La regla
+
+Cuando la IA va a dar un bloque de búsqueda (Ctrl+H), DEBE usar el
+código EXACTO que el humano pegó en el chat, copiado carácter por
+carácter, incluyendo:
+
+- Líneas en blanco en su posición exacta
+- Indentación exacta (2 espacios, 4 espacios, tabs)
+- Espacios antes de llaves, después de comas, etc.
+- Saltos de línea donde estén
+- Comentarios tal cual
+
+La IA NO debe:
+- Quitar líneas en blanco "para que quede más limpio"
+- Reindentar "para que quede más legible"
+- Normalizar espacios "para que sea consistente"
+- Resumir el bloque si es largo
+- Omitir partes con "..." o "// resto igual"
+
+### Protocolo
+
+1. El humano pega en el chat la función o bloque completo (Ctrl+A
+   dentro del bloque, Ctrl+C, pegar en chat).
+
+2. La IA copia ese bloque VERBATIM en su respuesta, cambia SOLO
+   las líneas que hay que cambiar, y lo devuelve.
+
+3. Si la IA necesita modificar 3 líneas de 40, las otras 37 van
+   IDÉNTICAS, carácter por carácter, incluidas líneas en blanco
+   entre bloques lógicos.
+
+### Ejemplo de lo prohibido
+
+Humano pega:
+
+    function foo() {
+      const x = 1;
+
+      if (x) {
+        return true;
+      }
+    }
+
+IA responde (MAL, quitó línea en blanco):
+
+    Busca exactamente:
+    function foo() {
+      const x = 1;
+      if (x) {
+        return true;
+      }
+    }
+
+IA responde (BIEN, verbatim):
+
+    Busca exactamente:
+    function foo() {
+      const x = 1;
+
+      if (x) {
+        return true;
+      }
+    }
+
+### Si el bloque no matchea
+
+Si el humano reporta "busqué X, NO EXISTE, el código actual tiene Y":
+
+- La IA NO debe reescribir el bloque "adivinando" el formato.
+- La IA DEBE pedirle al humano que pegue el bloque actual completo.
+- La IA DEBE devolver el bloque nuevo usando ESE pegado como base,
+  verbatim.
+
+### Por qué esto importa
+
+El propósito de forgeGit es que los cambios sean trazables y
+reversibles. Si la IA formatea distinto, el bloque no matchea, el
+cambio se aplica a mano, se cometen typos, y la trazabilidad se
+pierde. Verbatim garantiza que busca/reemplaza funcione siempre.
+
+---
+
 ### Formato obligatorio para REEMPLAZAR
 
     Busca exactamente este codigo:

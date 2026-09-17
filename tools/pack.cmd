@@ -6,7 +6,7 @@ cd /d "%~dp0"
 
 echo.
 echo   ============================================
-echo    Pack - Distribucion limpia
+echo    Pack - Distribucion limpia (v1.5.8)
 echo   ============================================
 echo.
 
@@ -18,28 +18,37 @@ REM --- Limpiar destino previo ---
 if exist "%DIST%" rmdir /s /q "%DIST%"
 
 mkdir "%OUT%"
-mkdir "%OUT%\lib"
-mkdir "%OUT%\templates"
+mkdir "%OUT%\.forge"
+mkdir "%OUT%\.forge\lib"
+mkdir "%OUT%\.forge\templates"
+mkdir "%OUT%\.forge\commands"
 mkdir "%OUT%\tools"
 mkdir "%OUT%\tools\bin"
 mkdir "%OUT%\tests"
 
 echo   Copiando archivos core...
-copy /Y "%ROOT%\init.cmd"   "%OUT%\" >nul
-copy /Y "%ROOT%\config.cmd" "%OUT%\" >nul
-copy /Y "%ROOT%\README.md"  "%OUT%\" >nul
+copy /Y "%ROOT%\forge.cmd"   "%OUT%\" >nul
+copy /Y "%ROOT%\README.md"   "%OUT%\" >nul
+copy /Y "%ROOT%\MANUAL.md"   "%OUT%\" >nul
+copy /Y "%ROOT%\WORKFLOW.md" "%OUT%\" >nul
 
-echo   Copiando modulos internos...
-copy /Y "%ROOT%\lib\*.cmd" "%OUT%\lib\" >nul
+echo   Copiando .forge/...
+copy /Y "%ROOT%\.forge\init.cmd"        "%OUT%\.forge\" >nul
+copy /Y "%ROOT%\.forge\config.cmd"      "%OUT%\.forge\" >nul
+copy /Y "%ROOT%\.forge\serve-static.js" "%OUT%\.forge\" >nul
 
-echo   Copiando templates...
-copy /Y "%ROOT%\templates\*.tpl" "%OUT%\templates\" >nul
+echo   Copiando .forge/lib/...
+copy /Y "%ROOT%\.forge\lib\*.cmd" "%OUT%\.forge\lib\" >nul
 
-echo   Copiando tools...
+echo   Copiando .forge/templates/...
+copy /Y "%ROOT%\.forge\templates\*.tpl" "%OUT%\.forge\templates\" >nul
+copy /Y "%ROOT%\.forge\templates\serve-static.js" "%OUT%\.forge\templates\" >nul
+
+echo   Copiando tools/...
 copy /Y "%ROOT%\tools\*.cmd" "%OUT%\tools\" >nul
 copy /Y "%ROOT%\tools\bin\*.cmd" "%OUT%\tools\bin\" >nul
 
-echo   Copiando tests...
+echo   Copiando tests/...
 copy /Y "%ROOT%\tests\*.cmd" "%OUT%\tests\" >nul
 
 echo.

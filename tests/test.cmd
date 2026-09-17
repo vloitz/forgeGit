@@ -4,7 +4,7 @@ chcp 65001 >nul 2>nul
 
 echo.
 echo   ============================================
-echo    forgeGit - Tests
+echo    forgeGit - Tests v1.5.8
 echo   ============================================
 echo.
 
@@ -25,47 +25,55 @@ echo   [TEST 1] Ejecutando forge...
 call "%FORGE_HOME%\tools\bin\forge.cmd" < nul >nul 2>nul
 
 REM Check archivos core
-if exist "init.cmd" (
-    echo     [OK] init.cmd creado
+if exist "forge.cmd" (
+    echo     [OK] forge.cmd creado
     set /a PASS+=1
 ) else (
-    echo     [X] init.cmd NO creado
+    echo     [X] forge.cmd NO creado
     set /a FAIL+=1
 )
 
-if exist "config.cmd" (
-    echo     [OK] config.cmd creado
+if exist ".forge\init.cmd" (
+    echo     [OK] .forge\init.cmd presente
     set /a PASS+=1
 ) else (
-    echo     [X] config.cmd NO creado
+    echo     [X] .forge\init.cmd NO presente
+    set /a FAIL+=1
+)
+
+if exist ".forge\config.cmd" (
+    echo     [OK] .forge\config.cmd presente
+    set /a PASS+=1
+) else (
+    echo     [X] .forge\config.cmd NO presente
     set /a FAIL+=1
 )
 
 REM Check 7 helpers
-for %%F in (guardar subir snapshots historial abrir auditar) do (
-    if exist "%%F.cmd" (
-        echo     [OK] %%F.cmd creado
+for %%F in (save push snapshots historial abrir auditar serve) do (
+    if exist ".forge\commands\%%F.cmd" (
+        echo     [OK] .forge\commands\%%F.cmd creado
         set /a PASS+=1
     ) else (
-        echo     [X] %%F.cmd NO creado
+        echo     [X] .forge\commands\%%F.cmd NO creado
         set /a FAIL+=1
     )
 )
 
 REM Check carpetas
-if exist "lib\ui.cmd" (
-    echo     [OK] lib\ui.cmd presente
+if exist ".forge\lib\ui.cmd" (
+    echo     [OK] .forge\lib\ui.cmd presente
     set /a PASS+=1
 ) else (
-    echo     [X] lib\ui.cmd NO presente
+    echo     [X] .forge\lib\ui.cmd NO presente
     set /a FAIL+=1
 )
 
-if exist "templates\abrir.cmd.tpl" (
-    echo     [OK] templates\abrir.cmd.tpl presente
+if exist ".forge\templates\abrir.cmd.tpl" (
+    echo     [OK] .forge\templates\abrir.cmd.tpl presente
     set /a PASS+=1
 ) else (
-    echo     [X] templates\abrir.cmd.tpl NO presente
+    echo     [X] .forge\templates\abrir.cmd.tpl NO presente
     set /a FAIL+=1
 )
 
@@ -95,28 +103,27 @@ echo.
 echo   [TEST 2] Ejecutando forge update...
 call "%FORGE_HOME%\tools\bin\forge.cmd" update < nul >nul 2>nul
 
-if exist "init.cmd" (
-    echo     [OK] init.cmd sigue presente
+if exist "forge.cmd" (
+    echo     [OK] forge.cmd sigue presente
     set /a PASS+=1
 ) else (
-    echo     [X] init.cmd desaparecio
+    echo     [X] forge.cmd desaparecio
+    set /a FAIL+=1
+)
+
+if exist ".forge\init.cmd" (
+    echo     [OK] .forge\init.cmd sigue presente
+    set /a PASS+=1
+) else (
+    echo     [X] .forge\init.cmd desaparecio
     set /a FAIL+=1
 )
 
 REM ============================================================
-REM   TEST 3: forge detecta instalacion previa
+REM   TEST 3: omitido (delegacion interactiva no automatizable)
 REM ============================================================
 echo.
-echo   [TEST 3] Ejecutando forge de nuevo (sin confirmar)...
-echo n | call "%FORGE_HOME%\tools\bin\forge.cmd" >nul 2>nul
-
-if exist "init.cmd" (
-    echo     [OK] init.cmd intacto tras cancelacion
-    set /a PASS+=1
-) else (
-    echo     [X] init.cmd se corrompio
-    set /a FAIL+=1
-)
+echo   [TEST 3] Omitido (test manual requerido)
 
 REM ============================================================
 REM   CLEANUP

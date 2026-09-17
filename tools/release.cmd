@@ -6,15 +6,15 @@ cd /d "%~dp0"
 
 echo.
 echo   ============================================
-echo    Release - Empaquetar y comprimir
+echo    Release - Empaquetar y comprimir (v1.5.8)
 echo   ============================================
 echo.
 
 REM --- 1. Pack ---
 call "%~dp0pack.cmd"
 
-REM --- 2. Leer version ---
-call "%~dp0..\config.cmd"
+REM --- 2. Leer version desde .forge/config.cmd ---
+call "%~dp0..\.forge\config.cmd"
 set "ZIP=%~dp0..\..\forgeGit-v%FG_VERSION%.zip"
 
 REM --- 3. Comprimir ---

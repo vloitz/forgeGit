@@ -26,18 +26,19 @@ Running `forge` in an empty folder:
 - Creates a universal `.gitignore` (covers Node, Python, Rust, Go)
 - Generates an adaptive `README.md`
 - Creates initial commit + tag `v1.0.0`
-- Generates 7 helper commands in the project
+- Generates 8 helper commands in `.forge/commands/`
 
-## The 7 helpers
+## The 8 helpers
 
 | File | Purpose |
 |------|---------|
-| `guardar.cmd` | Commit changes locally |
-| `subir.cmd` | Push to GitHub |
+| `save.cmd` | Commit changes locally |
+| `push.cmd` | Push to GitHub |
 | `snapshots.cmd` | Create/restore full project snapshots |
 | `historial.cmd` | View recent commits |
 | `auditar.cmd` | Generate diff reports (for AI review) |
 | `abrir.cmd` | Open project in VS Code |
+| `serve.cmd` | Dev server (auto-detect stack) |
 | `init.cmd` | Re-bootstrap (idempotent) |
 
 ## Install
@@ -85,15 +86,17 @@ forge help      Show help
 
 ```
 forgeGit/
-├── init.cmd              Entry point (14 steps)
-├── config.cmd            Configuration values
+├── forge.cmd             Menu + CLI (unico .cmd visible)
+├── .forge/               Infraestructura oculta
+│   ├── init.cmd          Bootstrap (17 pasos)
+│   ├── config.cmd        Configuration values
+│   ├── lib/              Internal modules
+│   ├── templates/        Source templates (.tpl)
+│   ├── commands/         8 helpers generados
+│   └── serve-static.js   Servidor Node
 ├── MANUAL.md             Full user manual
-├── FUTURE.md             Roadmap / ideas
-├── lib/                  Internal modules
-│   ├── ui.cmd            Terminal UI helpers
-│   ├── git-ops.cmd       Git operations
-│   └── templates.cmd     Template renderer
-├── templates/            Source templates (.tpl)
+├── WORKFLOW.md           AI workflow rules
+├── README.md             This file
 ├── tools/                Author tools
 │   ├── install.cmd       Install forge globally
 │   ├── uninstall.cmd     Uninstall forge
@@ -101,7 +104,7 @@ forgeGit/
 │   ├── pack.cmd          Build clean distribution
 │   ├── release.cmd       Build ZIP + open GitHub
 │   └── bin/forge.cmd     Global command
-└── tests/                Automated tests (14/14)
+└── tests/                Automated tests (16/16)
 ```
 
 ## Requirements
@@ -113,9 +116,9 @@ forgeGit/
 
 ## Status
 
-- Version: 1.2.2
+- Version: 1.5.8
 - Published: npm + GitHub Release
-- Tests: 14/14 passing
+- Tests: 16/16 passing
 - Platform: Windows only (Linux/Mac planned as Node.js CLI)
 
 ## Roadmap
