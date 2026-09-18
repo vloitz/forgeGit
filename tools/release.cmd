@@ -6,7 +6,7 @@ cd /d "%~dp0"
 
 echo.
 echo   ============================================
-echo    Release - Empaquetar y comprimir (v1.5.10)
+echo    Release - Empaquetar y comprimir (v1.5.11)
 echo   ============================================
 echo.
 

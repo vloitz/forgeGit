@@ -2,9 +2,9 @@
 
 Universal Git bootstrap kit for Windows.
 
-> **Â¿Vas a trabajar con IA (ChatGPT, DeepSeek, Claude, Gemini, Cursor)?**
+> **Ã‚Â¿Vas a trabajar con IA (ChatGPT, DeepSeek, Claude, Gemini, Cursor)?**
 > Lee primero [WORKFLOW.md](WORKFLOW.md) para entender las reglas de
-> trabajo, el formato quirÃºrgico de instrucciones, y los comandos de
+> trabajo, el formato quirÃƒÂºrgico de instrucciones, y los comandos de
 > rescate.
 
 ## What it is
@@ -87,25 +87,25 @@ forge help      Show help
 
 ```
 forgeGit/
-â”œâ”€â”€ forge.cmd             Menu + CLI (unico .cmd visible)
-â”œâ”€â”€ .forge/               Infraestructura oculta
-â”‚   â”œâ”€â”€ init.cmd          Bootstrap (17 pasos)
-â”‚   â”œâ”€â”€ config.cmd        Configuration values
-â”‚   â”œâ”€â”€ lib/              Internal modules
-â”‚   â”œâ”€â”€ templates/        Source templates (.tpl)
-â”‚   â”œâ”€â”€ commands/         8 helpers generados
-â”‚   â””â”€â”€ serve-static.js   Servidor Node
-â”œâ”€â”€ MANUAL.md             Full user manual
-â”œâ”€â”€ WORKFLOW.md           AI workflow rules
-â”œâ”€â”€ README.md             This file
-â”œâ”€â”€ tools/                Author tools
-â”‚   â”œâ”€â”€ install.cmd       Install forge globally
-â”‚   â”œâ”€â”€ uninstall.cmd     Uninstall forge
-â”‚   â”œâ”€â”€ restore.cmd       Restore PATH from backup
-â”‚   â”œâ”€â”€ pack.cmd          Build clean distribution
-â”‚   â”œâ”€â”€ release.cmd       Build ZIP + open GitHub
-â”‚   â””â”€â”€ bin/forge.cmd     Global command
-â””â”€â”€ tests/                Automated tests (16/16)
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ forge.cmd             Menu + CLI (unico .cmd visible)
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ .forge/               Infraestructura oculta
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ init.cmd          Bootstrap (17 pasos)
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ config.cmd        Configuration values
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ lib/              Internal modules
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ templates/        Source templates (.tpl)
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ commands/         8 helpers generados
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ serve-static.js   Servidor Node
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ MANUAL.md             Full user manual
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ WORKFLOW.md           AI workflow rules
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ README.md             This file
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ tools/                Author tools
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ install.cmd       Install forge globally
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ uninstall.cmd     Uninstall forge
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ restore.cmd       Restore PATH from backup
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ pack.cmd          Build clean distribution
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ release.cmd       Build ZIP + open GitHub
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ bin/forge.cmd     Global command
+Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ tests/                Automated tests (16/16)
 ```
 
 ## Requirements
@@ -117,7 +117,7 @@ forgeGit/
 
 ## Status
 
-- Version: 1.5.10
+- Version: 1.5.11
 - Published: npm + GitHub Release
 - Tests: 16/16 passing
 - Platform: Windows only (Linux/Mac planned as Node.js CLI)
