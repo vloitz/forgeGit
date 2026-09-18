@@ -1,138 +1,127 @@
-# forgeGit
 
-Universal Git bootstrap kit for Windows.
+**Eso son MIS instrucciones, no el contenido del manual.** El manual real está dentro del bloque ```markdown, pero envuelto con texto extra.
 
-> **¿Vas a trabajar con IA (ChatGPT, DeepSeek, Claude, Gemini, Cursor)?**
-> Lee primero [WORKFLOW.md](WORKFLOW.md) para entender las reglas de
-> trabajo, el formato quirúrgico de instrucciones, y los comandos de
-> rescate.
+### Fix — Reemplazar MANUAL.md completo
 
-## What it is
+**En VS Code, abrí `MANUAL.md`, `Ctrl+A` → Suprimir → Pegá esto:**
 
-forgeGit is a small toolkit that eliminates the repetitive setup work
-of starting a new Git project. Instead of manually copying `.gitignore`,
-creating a README, making the first commit, and tagging a version,
-you run one command and the project is ready.
+```markdown
+# forgeGit - Manual de uso
 
-Born from a real annoyance: copying the same 6 files into every new
-project, over and over, for years.
+Guia completa de instalacion, uso y mantenimiento.
 
-## What it does
+## Instalacion
 
-Running `forge` in an empty folder:
+    npm install -g forgegit
 
-- Initializes a Git repository
-- Sets `main` as default branch
-- Creates a universal `.gitignore` (covers Node, Python, Rust, Go)
-- Generates an adaptive `README.md`
-- Creates initial commit + tag `v1.0.0`
-- Generates 8 helper commands in `.forge/commands/`
-
-## The 8 helpers
-
-| File | Purpose |
-|------|---------|
-| `save.cmd` | Commit changes locally |
-| `push.cmd` | Push to GitHub |
-| `snapshots.cmd` | Create/restore full project snapshots |
-| `historial.cmd` | View recent commits |
-| `auditar.cmd` | Generate diff reports (for AI review) |
-| `abrir.cmd` | Open project in VS Code |
-| `serve.cmd` | Dev server (auto-detect stack) |
-| `init.cmd` | Re-bootstrap (idempotent) |
-
-## Install
-
-### Option A - npm (recommended)
-
-```cmd
-npm install -g forgegit
-```
-
-### Option B - GitHub Release
-
-Download the ZIP from:
+O descarga el ZIP desde:
 https://github.com/vloitz/forgeGit/releases/latest
 
-Extract anywhere. Run `tools\install.cmd` once.
+Requisitos: Windows 10/11, Node.js 18+, Git 2.30+
 
-## Usage
+## Uso en un proyecto nuevo
 
-```cmd
-cd any\project\folder
-forge
-```
+    cd ruta\del\proyecto
+    forge
 
-The folder becomes a fully configured Git repository with helpers.
+El proyecto queda con Git, .gitignore, README.md, commit inicial,
+tag v1.0.0 y 8 helpers en .forge/commands/.
 
-## Global commands
+## Uso en un proyecto existente
 
-```cmd
-forge           Bootstrap current directory
-forge update    Sync templates from kit
-forge help      Show help
-```
+Si el proyecto ya tiene forgeGit instalado:
 
-## Philosophy
+    cd ruta\del\proyecto
+    forge <comando>
 
-- **Idempotent**: safe to run multiple times, never overwrites user files
-- **Modular**: templates live in .tpl files, separated from logic
-- **Portable**: works in any Windows folder, any project type
-- **Configurable**: edit `config.cmd`, not the logic
-- **Self-documenting**: generates colored terminal output
-- **Batteries included**: snapshots, audit reports, tests
+El comando global detecta el forge.cmd local y delega automaticamente.
 
-## Structure
+## Comandos disponibles
 
-```
-forgeGit/
-├── forge.cmd             Menu + CLI (unico .cmd visible)
-├── .forge/               Infraestructura oculta
-│   ├── init.cmd          Bootstrap (17 pasos)
-│   ├── config.cmd        Configuration values
-│   ├── lib/              Internal modules
-│   ├── templates/        Source templates (.tpl)
-│   ├── commands/         8 helpers generados
-│   └── serve-static.js   Servidor Node
-├── MANUAL.md             Full user manual
-├── WORKFLOW.md           AI workflow rules
-├── README.md             This file
-├── tools/                Author tools
-│   ├── install.cmd       Install forge globally
-│   ├── uninstall.cmd     Uninstall forge
-│   ├── restore.cmd       Restore PATH from backup
-│   ├── pack.cmd          Build clean distribution
-│   ├── release.cmd       Build ZIP + open GitHub
-│   └── bin/forge.cmd     Global command
-└── tests/                Automated tests (16/16)
-```
+| Comando | Descripcion |
+|---------|-------------|
+| forge | Instala forgeGit en la carpeta actual |
+| forge update | Actualiza .forge/ desde el kit global |
+| forge version | Muestra la version instalada |
+| forge help | Ayuda completa |
+| forge init | Re-bootstrap (idempotente) |
+| forge init --force | Regenerar todo |
+| forge save | Commit de cambios |
+| forge push | Push a GitHub |
+| forge log | Ver commits recientes |
+| forge snap | Crear/restaurar snapshots |
+| forge audit | Generar reporte diff |
+| forge open | Abrir en VS Code |
+| forge serve | Servidor de desarrollo (auto-detect) |
 
-## Requirements
+## Estructura del proyecto
 
-- Windows 10 or 11
-- Node.js 18+
-- Git 2.30+
-- VS Code CLI (optional, for `abrir.cmd`)
+    MiProyecto/
+    |-- forge.cmd          Menu + CLI (unico .cmd visible)
+    |-- .forge/
+    |   |-- init.cmd       Bootstrap
+    |   |-- config.cmd     Configuracion
+    |   |-- commands/      8 helpers
+    |   |-- lib/           Modulos internos
+    |   |-- templates/     Fuentes .tpl
+    |   +-- serve-static.js
+    |-- versiones/         Snapshots
+    |-- audits/            Reportes diff
+    +-- (tus archivos)
 
-## Status
+## Los 8 helpers
 
-- Version: 1.5.8
-- Published: npm + GitHub Release
-- Tests: 16/16 passing
-- Platform: Windows only (Linux/Mac planned as Node.js CLI)
+| Helper | Descripcion |
+|--------|-------------|
+| save.cmd | Commit local de cambios |
+| push.cmd | Push a GitHub |
+| snapshots.cmd | Crear/restaurar snapshots |
+| historial.cmd | Ver commits recientes |
+| auditar.cmd | Generar reporte diff |
+| abrir.cmd | Abrir en VS Code |
+| serve.cmd | Servidor de desarrollo (auto-detect) |
+| init.cmd | Re-bootstrap (idempotente) |
 
-## Roadmap
+## Actualizar
 
-See [FUTURE.md](FUTURE.md) for the plan to convert this into a
-cross-platform Node.js CLI (zero friction, no .cmd files in projects).
+    npm install -g forgegit@latest
+    cd ruta\del\proyecto
+    forge update
+
+## Actualizar el kit y un proyecto
+
+Actualizar el kit global:
+
+    npm install -g forgegit@latest
+
+Actualizar un proyecto especifico:
+
+    cd ruta\del\proyecto
+    forge update
+
+Esto copia forge.cmd y .forge/ desde el kit global al proyecto,
+sin tocar tus archivos ni los helpers pre-generados.
+
+## Desinstalar
+
+    npm uninstall -g forgegit
+
+## Filosofia
+
+- Idempotente: seguro de ejecutar multiples veces
+- Modular: templates en archivos .tpl
+- Portable: funciona en cualquier carpeta Windows
+- Configurable: editar .forge/config.cmd
+- Autodocumentado: salida de terminal con colores
 
 ## Links
 
-- Repository: https://github.com/vloitz/forgeGit
+- Repo: https://github.com/vloitz/forgeGit
 - npm: https://www.npmjs.com/package/forgegit
 - Releases: https://github.com/vloitz/forgeGit/releases
-- Manual: [MANUAL.md](MANUAL.md)
+- Workflow IA: WORKFLOW.md
+- Roadmap: FUTURE.md
 
-## License
+## Licencia
 
 MIT
