@@ -6,7 +6,7 @@ cd /d "%~dp0"
 
 echo.
 echo   ============================================
-echo    Pack - Distribucion limpia (v1.5.8)
+echo    Pack - Distribucion limpia (v1.5.10)
 echo   ============================================
 echo.
 

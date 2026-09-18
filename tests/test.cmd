@@ -4,7 +4,7 @@ chcp 65001 >nul 2>nul
 
 echo.
 echo   ============================================
-echo    forgeGit - Tests v1.5.8
+echo    forgeGit - Tests v1.5.10
 echo   ============================================
 echo.
 
