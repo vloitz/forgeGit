@@ -33,11 +33,12 @@ $skipped = 0
 $missing = 0
 
 $targets = @(
-    @{ Path = $configPath;         Pattern = 'FG_VERSION=[\d\.]+';        Repl = "FG_VERSION=$NewVersion" },
-    @{ Path = 'README.md';          Pattern = 'Version: [\d\.]+';           Repl = "Version: $NewVersion" },
-    @{ Path = 'tests\test.cmd';     Pattern = 'Tests v[\d\.]+';             Repl = "Tests v$NewVersion" },
-    @{ Path = 'tools\pack.cmd';     Pattern = 'limpia \(v[\d\.]+\)';       Repl = "limpia (v$NewVersion)" },
-    @{ Path = 'tools\release.cmd';  Pattern = 'comprimir \(v[\d\.]+\)';    Repl = "comprimir (v$NewVersion)" }
+    @{ Path = $configPath; Pattern = 'FG_VERSION=[\d\.]+'; Repl = "FG_VERSION=$NewVersion" },
+    @{ Path = 'README.md'; Pattern = 'Version: [\d\.]+'; Repl = "Version: $NewVersion" },
+    @{ Path = 'tests\test.cmd'; Pattern = 'Tests v[\d\.]+'; Repl = "Tests v$NewVersion" },
+    @{ Path = 'tools\pack.cmd'; Pattern = 'limpia \(v[\d\.]+\)'; Repl = "limpia (v$NewVersion)" },
+    @{ Path = 'tools\release.cmd'; Pattern = 'comprimir \(v[\d\.]+\)'; Repl = "comprimir (v$NewVersion)" },
+    @{ Path = 'WORKFLOW.md'; Pattern = 'commands/\s+7 helpers'; Repl = 'commands/          8 helpers' }
 )
 
 foreach ($t in $targets) {
@@ -51,7 +52,8 @@ foreach ($t in $targets) {
     if ($content -eq $newContent) {
         Write-Host "  [--] $($t.Path) - sin cambios"
         $skipped++
-    } else {
+    }
+    else {
         [System.IO.File]::WriteAllText((Resolve-Path $t.Path), $newContent, $utf8)
         Write-Host "  [OK] $($t.Path)"
         $updated++
@@ -64,7 +66,8 @@ Write-Host '   Actualizando package.json...'
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host '  [OK] package.json actualizado'
-} else {
+}
+else {
     Write-Host '  [!] npm version fallo, verifica manualmente'
 }
 

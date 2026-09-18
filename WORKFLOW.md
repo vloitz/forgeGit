@@ -435,7 +435,7 @@ Elegir v, escribir SI.
     |-- .forge/
     |   |-- init.cmd           Bootstrap
     |   |-- config.cmd         Configuracion
-    |   |-- commands/          7 helpers
+    |   |-- commands/          8 helpers
     |   |-- lib/               Modulos internos
     |   |-- templates/         Fuentes .tpl
     |   +-- serve-static.js    Servidor Node.js
