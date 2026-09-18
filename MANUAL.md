@@ -1,8 +1,3 @@
-# 📄 `MANUAL.md` — Código Completo (v1.5.8)
-
-**En VS Code, abrí `MANUAL.md`, `Ctrl+A` → Suprimir → Pegá esto:**
-
-```markdown
 # forgeGit - Manual de uso
 
 Guia completa de instalacion, uso y mantenimiento.
@@ -275,7 +270,3 @@ forge version   Show version
 forge help      Show help
 ```
 ```
-
-**Guardá con `Ctrl+S`.**
-
----
